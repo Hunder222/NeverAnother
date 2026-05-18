@@ -2,7 +2,9 @@ package com.example.neveranother
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -10,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.neveranother.components.NABodyText
 import com.example.neveranother.components.NAHeader1
@@ -43,6 +46,8 @@ fun Temppage(
         NAHeader2("Nohemi Header 2")
         NABodyText("Inter Body Text")
         NAMicroCopy("Inter Micro copy text")
+
+        Spacer(modifier = Modifier.height(20.dp))
 
         //Buttons that uses callback functions to navigate to views
             // example on how to use never another colors in button
