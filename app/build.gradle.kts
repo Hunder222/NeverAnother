@@ -39,6 +39,8 @@ android {
     }
 }
 
+val nav_version = "2.8.9"
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -56,4 +58,33 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation("androidx.navigation:navigation-compose:${nav_version}")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("io.coil-kt:coil-gif:2.6.0")
+    val camerax_version = "1.4.0"
+
+    implementation("androidx.camera:camera-core:$camerax_version")
+    implementation("androidx.camera:camera-camera2:$camerax_version")
+    implementation("androidx.camera:camera-lifecycle:$camerax_version")
+    implementation("androidx.camera:camera-view:$camerax_version")
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
+
+    //Google Material Icons
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
+    //Google Fonts
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Retrofit with Scalar Converter
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    // Retrofit with gson Converter
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // coRoutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
