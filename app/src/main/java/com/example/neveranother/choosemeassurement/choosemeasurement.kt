@@ -16,6 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.neveranother.R
+import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.ButtonDefaults
 
 
 val btn3DText: String = "3D-scan"
@@ -50,11 +52,15 @@ fun Scan3D(){
 
 @Composable
 fun FilledButtonExample(onClick: () -> Unit) {
+
     Button(
-        modifier = Modifier.
-    clip(RoundedCornerShape(15.dp)),
-        onClick = { onClick() })
-    {
+        onClick = onClick,
+        shape = RoundedCornerShape(15.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFFFF5F00)
+        )
+    ) {
         Text(btn3DText)
     }
 }
+
