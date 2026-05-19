@@ -42,10 +42,10 @@ fun Temppage(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // examples of text components for devs
-        NAHeader1("Nohemi Header 1")
-        NAHeader2("Nohemi Header 2")
-        NABodyText("Inter Body Text")
-        NAMicroCopy("Inter Micro copy text")
+        NAHeader1("Header1 (NAHeader1)")
+        NAHeader2("Header 2 (NAHeader2)")
+        NABodyText("Body Text (NABodyText)")
+        NAMicroCopy("Micro copy (NAMicroCopy)")
 
         Spacer(modifier = Modifier.height(20.dp))
 

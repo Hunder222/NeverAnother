@@ -22,9 +22,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents">
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/scanner.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/scanner.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/temppage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/temppage.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_Black.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_black.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_Bold.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_bold.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_ExtraBold.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_extrabold.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_ExtraLight.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_extralight.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_Light.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_light.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_Medium.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_medium.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_Regular.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_regular.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_SemiBold.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_semibold.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/Nohemi_Thin.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/nohemi_thin.ttf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +49,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=C:\Users\Hunte\.android\avd\Medium_Phone.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[PhysicalDevice::serial=RFGL10GRXTY]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -70,7 +85,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -100,22 +115,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;app.teamhub.selectedTeam&quot;: &quot;https://github.com/Hunder222/NeverAnother&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "app.teamhub.selectedTeam": "https://github.com/Hunder222/NeverAnother",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "3dscanner",
+    "kotlin-language-version-configured": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Hunte\AndroidStudioProjects\NeverAnother\app\src\main\res\font" />

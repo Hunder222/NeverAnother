@@ -87,4 +87,7 @@ dependencies {
 
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // AR
+    implementation("io.github.sceneview:arsceneview:2.2.1")
 }
