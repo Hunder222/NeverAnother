@@ -3,6 +3,7 @@ package com.example.neveranother.components
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.neveranother.ui.theme.Inter
@@ -45,14 +46,15 @@ fun NAHeader2(
 @Composable
 fun NABodyText(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    color: Color = NAtextBlack
 ) {
     Text(
         text = text,
         fontFamily = Inter,
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
-        color = NAtextBlack,
+        color = color,
         modifier = modifier
     )
 }
@@ -71,3 +73,4 @@ fun NAMicroCopy(
         modifier = modifier
     )
 }
+
