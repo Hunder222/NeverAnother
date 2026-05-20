@@ -25,7 +25,7 @@ import androidx.compose.ui.text.withStyle
 
 @Composable
 fun Results(
-    viewModel: NAViewModel,
+    naViewModel: NAViewModel,
     onBack: () -> Unit = {},
     onGoToCart: () -> Unit = {}
 ) {
@@ -73,11 +73,11 @@ fun Results(
             Spacer(modifier = Modifier.height(32.dp))
 
             // Result Cards
-            ResultCard(title = "Øvre Omkreds", value = "${viewModel.upperCircumference} cm")
-            ResultCard(title = "Nedre Omkreds", value = "${viewModel.lowerCircumference} cm")
-            ResultCard(title = "Volume", value = viewModel.chestVolume)
-            ResultCard(title = "Brystbredde", value = "${viewModel.chestWidth} cm")
-            ResultCard(title = "Brysthøjde", value = "${viewModel.chestHeight} cm")
+            ResultCard(title = "Øvre Omkreds", value = "${naViewModel.upperCircumference} cm")
+            ResultCard(title = "Nedre Omkreds", value = "${naViewModel.lowerCircumference} cm")
+            ResultCard(title = "Volume", value = naViewModel.chestVolume)
+            ResultCard(title = "Brystbredde", value = "${naViewModel.chestWidth} cm")
+            ResultCard(title = "Brysthøjde", value = "${naViewModel.chestHeight} cm")
 
             Spacer(modifier = Modifier.height(32.dp))
         }
