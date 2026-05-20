@@ -10,7 +10,6 @@ import com.example.neveranother.Temppage
 import com.example.neveranother.cart.Cart
 import com.example.neveranother.choosemeassurement.Choosemeasurement
 import com.example.neveranother.frontpage.Frontpage
-import com.example.neveranother.history.History
 import com.example.neveranother.manual.ChestHeight
 import com.example.neveranother.manual.ChestVolume
 import com.example.neveranother.manual.Results
@@ -19,11 +18,11 @@ import com.example.neveranother.manual.LowerCircumference
 import com.example.neveranother.manual.Manual
 import com.example.neveranother.productpage.Productpage
 import com.example.neveranother.scanner.Scanner
-import com.example.neveranother.viewmodels.NAViewModel
+import com.example.neveranother.viewmodels.NAviewmodel
 
 @Composable
 fun Navigatior(
-    naViewModel: NAViewModel,
+    NAviewmodel: NAviewmodel,
 ) {
     val navController = rememberNavController()
 
@@ -45,13 +44,13 @@ fun Navigatior(
     ) {
         composable("temppage") {
             Temppage(
+                NAviewmodel,
                 goToFrontpage = {navController.navigate("frontpage")},
                 goToProductpage = {navController.navigate("productpage")},
                 goToChoosemeasurement = {navController.navigate("choosemeasurement")},
                 goToManual = {navController.navigate("manual")},
                 goToScanner = {navController.navigate("scanner")},
-                goToCart = {navController.navigate("cart")},
-                goToHistory = {navController.navigate("history")}
+                goToCart = {navController.navigate("cart")}
             )
         }
         composable("frontpage") {
@@ -61,74 +60,60 @@ fun Navigatior(
             Productpage()
         }
         composable("choosemeasurement"){
-            Choosemeasurement(
-                onManualClick = { navController.navigate("manual") },
-                onScannerClick = { navController.navigate("scanner") },
-                onBack = { navController.popBackStack() }
-            )
+            Choosemeasurement(NAviewmodel,
+                {navController.navigate("manual")},
+                {navController.navigate("scanner")})
         }
         composable("manual"){
             Manual(
-                viewModel = naViewModel,
+                viewModel = NAviewmodel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("lowercircumference") }
             )
         }
         composable("lowercircumference"){
             LowerCircumference(
-                viewModel = naViewModel,
+                viewModel = NAviewmodel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("chestvolume") }
             )
         }
         composable("chestvolume"){
             ChestVolume(
-                viewModel = naViewModel,
+                viewModel = NAviewmodel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("chestwidth") }
             )
         }
         composable("chestwidth"){
             ChestWidth(
-                viewModel = naViewModel,
+                viewModel = NAviewmodel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("chestheight") }
             )
         }
         composable("chestheight"){
             ChestHeight(
-                viewModel = naViewModel,
+                viewModel = NAviewmodel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("results") }
             )
         }
         composable("results") {
             Results(
-                naViewModel = naViewModel,
+                NAviewmodel = NAviewmodel,
                 onBack = { navController.popBackStack() },
                 onGoToCart = {
-                    naViewModel.saveCurrentMeasurements()
+                    NAviewmodel.saveCurrentMeasurements()
                     navController.navigate("cart")
                 }
             )
         }
         composable("scanner"){
-            Scanner(
-                onBack = { navController.popBackStack() },
-                onScanComplete = {
-                    naViewModel.saveScannerResults()
-                    navController.navigate("cart")
-                }
-            )
+            Scanner()
         }
         composable("cart"){
             Cart()
-        }
-        composable("history") {
-            History(
-                viewModel = naViewModel,
-                onBack = { navController.popBackStack() }
-            )
         }
     }
 }
