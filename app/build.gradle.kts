@@ -5,7 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.neveranother"
-    compileSdk = 36
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
+
     defaultConfig {
         applicationId = "com.example.neveranother"
         minSdk = 24
@@ -65,6 +70,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:$camerax_version")
     implementation("androidx.camera:camera-view:$camerax_version")
     implementation("androidx.compose.material:material-icons-extended:1.6.3")
+
+    //Google Material Icons
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
     //Google Fonts
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
     // Retrofit
@@ -77,7 +85,10 @@ dependencies {
     // coRoutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
-    // Media3 for Video Playback
-    implementation("androidx.media3:media3-exoplayer:1.3.1")
-    implementation("androidx.media3:media3-ui:1.3.1")
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // GIF library
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("io.coil-kt:coil-gif:2.6.0")
 }
