@@ -3,6 +3,7 @@ package com.example.neveranother.choosemeassurement
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -58,6 +59,16 @@ fun Choosemeasurement(){
             {},
             infoText3DDanish
         )
+
+        Row{
+            Icon(
+                imageVector = Icons.Default.Info,
+                contentDescription = "Infoicon",
+                tint = Color.Black
+            )
+
+            Text("Alt data bliver slettet efter brug af 3D-scanneren. Bruges med tætsiddende tøj.")
+        }
 
         MeassurementCard(
             R.drawable.meassureself,
