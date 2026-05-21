@@ -58,14 +58,14 @@ import com.example.neveranother.components.NAHeader1
 import com.example.neveranother.ui.theme.NAbackgroundColor
 import com.example.neveranother.ui.theme.NAtextBlack
 
-
+// Reusable dropdown function
 @Composable
 fun Dropdown(
     title: String,
     fontSize: TextUnit = 20.sp,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit // Can pass another function inside composable
 ) {
-    var isExpanded by remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(false) } // Remembers if the dropdown is open or closed
 
     Column(
         modifier = Modifier
@@ -75,13 +75,14 @@ fun Dropdown(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { isExpanded = !isExpanded } // Executes the action
+                .clickable { isExpanded = !isExpanded } // Flips the value from true to false
                 .padding(vertical = 16.dp, horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             NABodyText(title, fontSize = fontSize, modifier = Modifier.weight(1f))
 
+            // Checks the isExpanded state to decide which arrow to show
             if (isExpanded) {
                 Icon(
                     painter = painterResource(R.drawable.expanded),
@@ -98,12 +99,14 @@ fun Dropdown(
                 )
             }
         }
+        // Shows content if isExpanded is true
         if (isExpanded) {
             content()
         }
     }
 }
 
+// Top navigation (Mathias have hopefully made it)
 @Composable
 fun Navigation() {
     Row(
@@ -114,17 +117,19 @@ fun Navigation() {
     }
 }
 
-
+// Product part
 @Composable
 fun Product() {
-
+// Tracks if the white or black icon is active
     var isColorSelected by remember { mutableStateOf(true) }
 
+// Tracks how many items the user wants to buy
     var quantity by remember { mutableStateOf(1) }
 
     Column(
         modifier = Modifier.fillMaxWidth(0.90f)
     ) {
+        // Checks the state if true it picks white image, otherwise it picks black image
         val productImage =
             if (isColorSelected) R.drawable.na_prod_white else R.drawable.na_prod_black
 
@@ -154,6 +159,7 @@ fun Product() {
                     painter = painterResource(R.drawable.white_circle),
                     contentDescription = "White color circle",
                     modifier = Modifier
+                        // When clicked it shows white bra
                         .clickable { isColorSelected = true },
                     tint = Color.Unspecified
                 )
@@ -164,6 +170,7 @@ fun Product() {
                     painter = painterResource(R.drawable.black_circle),
                     contentDescription = "Black color circle",
                     modifier = Modifier
+                        // When clicked it shows black bra
                         .clickable { isColorSelected = false }
                 )
             }
@@ -183,13 +190,14 @@ fun Product() {
                     contentDescription = "minus icon",
                     tint = Color.Unspecified,
                     modifier = Modifier
+                        // When clicked it makes sure quantity can't go below 1
                         .clickable {
                             if (quantity > 1) quantity--
                         }
                 )
 
                 Spacer(modifier = Modifier.width(5.dp))
-
+                // Updates the counter each time you click
                 NABodyText(quantity.toString())
 
                 Spacer(modifier = Modifier.width(5.dp))
@@ -199,6 +207,7 @@ fun Product() {
                     contentDescription = "plus icon",
                     tint = Color.Unspecified,
                     modifier = Modifier
+                        // When clicked it adds one to the counter
                         .clickable {
                             quantity++
                         }
@@ -239,6 +248,7 @@ fun Product() {
     BorderLine()
 }
 
+// Reusable borderline.
 @Composable
 fun BorderLine() {
     HorizontalDivider(
@@ -249,6 +259,7 @@ fun BorderLine() {
     )
 }
 
+// Measurement part
 @Composable
 fun Measurement() {
     Column(
@@ -271,8 +282,10 @@ fun Measurement() {
     BorderLine()
 }
 
+// DropwdownContent 1 for measurement dropdown. Handles measurement data from user
 @Composable
 fun dropdownContent1() {
+    // Keeps the data even if user rotates phone
     var upperCircum by rememberSaveable { mutableStateOf("") }
     var lowerCircum by rememberSaveable { mutableStateOf("") }
     var chestWidth by rememberSaveable { mutableStateOf("") }
@@ -287,6 +300,7 @@ fun dropdownContent1() {
         Row(
             horizontalArrangement = Arrangement.Center,
         ) {
+            // Calls the GIFLoader composable
             GIFLoader(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -304,6 +318,7 @@ fun dropdownContent1() {
                 onValueChange = { upperCircum = it },
                 label = { Text("Øvre omkreds", fontSize = 15.sp) },
                 modifier = Modifier.weight(1f),
+                // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
 
             )
@@ -313,6 +328,7 @@ fun dropdownContent1() {
                 onValueChange = { lowerCircum = it },
                 label = { Text("Nedre omkreds", fontSize = 15.sp) },
                 modifier = Modifier.weight(1f),
+                // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
 
             )
@@ -327,6 +343,7 @@ fun dropdownContent1() {
                 onValueChange = { chestWidth = it },
                 label = { Text("Brystbredde", fontSize = 15.sp) },
                 modifier = Modifier.weight(1f),
+                // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
 
             )
@@ -336,24 +353,28 @@ fun dropdownContent1() {
                 onValueChange = { chestHeight = it },
                 label = { Text("Brysthøjde", fontSize = 15.sp) },
                 modifier = Modifier.weight(1f),
+                // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
 
             )
         }
+        // Calls the DropdownSelector to show breast volume
         DropdownSelector()
     }
 }
 
-
+// Data class for DropdownSelector
+// Used to pair text and images together
 data class MenuOptions(
     val text: String,
     val image: Int
 )
 
+// DropdownSelector for breast volume in measurement
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropdownSelector() {
-
+    // A list of all four options using the data class
     val options = listOf(
         MenuOptions("Fastere top", R.drawable.firmer_top_volumen),
         MenuOptions("Blødere top", R.drawable.softer_top_volumen),
@@ -361,23 +382,30 @@ fun DropdownSelector() {
         MenuOptions("Blødere bund", R.drawable.softer_bottom_volumen),
     )
 
+    // Keeps the dropdown closed
     var expanded by remember { mutableStateOf(false) }
-
+    // Starts off with Volume and changes when you press on an option.
+    // Resets if you close the Dropdown composable
     var selectedOption by remember { mutableStateOf("Volume") }
 
     Column() {
+        // Handles the logic of a dropdown field
         ExposedDropdownMenuBox(
             expanded = expanded,
+            // Toggles the menu open or closed when user taps the field
             onExpandedChange = { expanded = !expanded }
         ) {
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
+                    // Makes sure the popup menu appears relative to the text field
                     .menuAnchor(),
+                // Makes sure the user can't type in the field
                 readOnly = true,
+                // Shows the selected volume
                 value = selectedOption,
                 onValueChange = {},
-
+                // Arrow that rotates depending on state
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                 },
@@ -387,7 +415,7 @@ fun DropdownSelector() {
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-
+            // loops through the list and creates dropDownMenuItem for each one
                 options.forEach { option ->
                     DropdownMenuItem(
                         text = {
@@ -412,8 +440,11 @@ fun DropdownSelector() {
                                 )
                             }
                         },
+
                         onClick = {
+                            // Updates selectedOption with selected text when clicked
                             selectedOption = option.text
+                            // Closes the menu when clicked
                             expanded = false
                         }
                     )
@@ -423,13 +454,14 @@ fun DropdownSelector() {
     }
 }
 
+// Reusable GIFLoader used with the Coil library
 @Composable
 fun GIFLoader(
     modifier: Modifier = Modifier,
     gifResource: Int
 ) {
     val context = LocalContext.current
-
+    // Builds a custom ImageLoader that knows how to read GIF files
     val imageLoader = remember {
         ImageLoader.Builder(context)
             .components {
@@ -443,7 +475,9 @@ fun GIFLoader(
     }
 
     Image(
+        // Draws image. Loads GIF in background so app doesn't freeze
         painter = rememberAsyncImagePainter(
+            // Tells Coil which GIF to load
             model = remember(gifResource) {
                 ImageRequest.Builder(context)
                     .data(gifResource)
@@ -456,12 +490,14 @@ fun GIFLoader(
     )
 }
 
+// Readmore part
 @Composable
 fun Readmore(
     text: String,
     modifier: Modifier = Modifier,
     collapsedMaxLines: Int = 3
 ) {
+    // Tracks whether the user sees short text or full text
     var isExpanded by remember { mutableStateOf(false) }
 
     Column(
@@ -472,21 +508,27 @@ fun Readmore(
     ) {
         Text(
             text = text,
+            // If readmore is closed it limits text to three lines
+            // If readmore is open, it shows full text
             maxLines = if (isExpanded) Int.MAX_VALUE else collapsedMaxLines,
+            // When text is collapsed it shows ... to tell user there is more to read
             overflow = TextOverflow.Ellipsis
         )
 
         Text(
+            // Shows "læs mindre" if text is open otherwise shows "læs mere" when collapsed
             text = if (isExpanded) "Læs mindre" else "Læs mere",
             color = NAtextBlack,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
+                // Flips state when clicking text
                 .clickable { isExpanded = !isExpanded }
                 .padding(top = 4.dp)
         )
     }
 }
 
+// Reusable ProductInfo
 @Composable
 fun ProductInfo(
     logo: Int,
@@ -514,6 +556,7 @@ fun ProductInfo(
     }
 }
 
+// DropdownContent2 for all other dropdowns used
 @Composable
 fun DropdownContent2(
     content: String
@@ -527,6 +570,7 @@ fun DropdownContent2(
     }
 }
 
+// FAQ part
 @Composable
 fun FAQ() {
     Column(
