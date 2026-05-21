@@ -39,6 +39,10 @@ import com.example.neveranother.viewmodels.NAviewmodel
 
 //these are the texts for the page in differnt languages
 val btn3DText: String = "3D-scan"
+
+val importantTextDanish: String = "Alt data bliver slettet efter brug af 3D-scanneren. Bruges med tætsiddende tøj."
+val importantTextEnglish: String = "All data is deleted after using the 3D scanner. Use with tight-fitting clothing."
+
 val btnManualDanish: String = "Manuel"
 val btnManualEnglish: String = "Manual"
 
@@ -49,9 +53,14 @@ val infoTextManualDanish: String = "Du vil følge en step by step guide der båd
 val infoTextManualEnglish: String ="You will follow a step by step guide that can be either a visual or video guide based on what you want. You will go through 5 steps. Among other things, you will need a measuring tape to measure the upper circumference, lower circumference, chest width and chest height. At the end, you will get a list of the measurements you have made"
 
 
+val firstTextReminderBtnDanish: String = "Har du ikke tid lige nu?"
+val secondTextReminderBtnDanish: String ="Påmind mig senere"
+val firstTextReminderBtnEnglish: String ="Don't have the time now?"
+val secondTextReminderBtnEnglish: String ="Remind me later"
+
     @Composable
 fun Choosemeasurement(
-        NAviewmodel: NAviewmodel,
+        NAviewmodel: NAviewmodel, // references navigator so the buttons lead to the correct pages
         goToManual: () -> Unit,
         goToScanner: () -> Unit
 ){
@@ -76,7 +85,7 @@ fun Choosemeasurement(
             infoText3DDanish
         )
 
-        Row(
+        Row( // the icon and text needs to be next to each other so a row is used
             modifier = Modifier.padding(horizontal = 32.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -90,12 +99,13 @@ fun Choosemeasurement(
             )
 
             Text(
-                text = "Alt data bliver slettet efter brug af 3D-scanneren. Bruges med tætsiddende tøj.",
-                fontSize = 12.sp
+                text = importantTextDanish,
+                fontSize = 12.sp,
+                lineHeight = 14.sp
             )
         }
 
-        MeassurementCard(
+        MeassurementCard( // manual
             R.drawable.meassureself,
             "Image of woman meassuring herself with a soft tape meassure",
             btnManualDanish,
@@ -103,7 +113,7 @@ fun Choosemeasurement(
             infoTextManualDanish
         )
 
-        ReminderButton {  }
+        ReminderButton ({},firstTextReminderBtnDanish,secondTextReminderBtnDanish)
     }
 }
 @Composable
@@ -114,11 +124,11 @@ fun MeassurementCard( // use same for both so that changes can be made for both 
     onClick: () -> Unit,
     infoTextInLanguage: String) {
 
-    var showInfo by remember { // remembers wheter or not info should be shown
+    var showInfo by remember { // remembers whether info should be shown
         mutableStateOf(false) // does so that info is automatically not shown
     }
 
-    Card( // makes it easy to reuse
+    Card( // groups category and makes shape correct with rounded corners
         shape = RoundedCornerShape(15.dp),
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -224,7 +234,9 @@ fun InfoCard(
 
 @Composable
 fun ReminderButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    firstTextReminderBtn: String,
+    secondTextReminderBtn: String
 ) {
 
     Button(
@@ -242,13 +254,13 @@ fun ReminderButton(
         ) {
 
             Text(
-                text = "Har du ikke tid lige nu?",
+                text = firstTextReminderBtn,
                 fontSize = 12.sp,
                 color = Color.White
             )
 
             Text(
-                text = "Påmind mig senere",
+                text = secondTextReminderBtn,
                 fontSize = 22.sp,
                 color = Color.White
             )
