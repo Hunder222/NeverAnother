@@ -1,7 +1,6 @@
 package com.example.neveranother.choosemeassurement
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.neveranother.R
 import androidx.compose.ui.graphics.Color
@@ -29,42 +27,80 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.unit.sp
 
 //these are the texts for the page in differnt languages
 val btn3DText: String = "3D-scan"
-var btnManualDanish: String = "Manuel"
-var btnManualEnglish: String = "Manual"
+val btnManualDanish: String = "Manuel"
+val btnManualEnglish: String = "Manual"
 
-@Composable
+val infoText3DDanish: String = "Vores smarte 3D-scanner er en af de nemmeste måder at måle dig selv på med en 97% nøjagtighed."
+val infoText3DEnglish: String ="Our smart 3D-scanner is the easiest way to meassure yourself. It has a 97% accuracy."
+
+val infoTextManualDanish: String = "Du vil følge en step by step guide der både kan være en visuel eller video guide ud fra hvad du har lyst til. Du kommer igennem 5 steps. Der skal du blandt andet bruge et målebånd for at kunne måle øvre omkreds, nedre omkreds, brystbredde og brysthøjde. Til sidst ville du få en liste over de mål du har lavet."
+val infoTextManualEnglish: String ="You will follow a step by step guide that can be either a visual or video guide based on what you want. You will go through 5 steps. Among other things, you will need a measuring tape to measure the upper circumference, lower circumference, chest width and chest height. At the end, you will get a list of the measurements you have made"
+
+
+    @Composable
 fun Choosemeasurement(){
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        MeassurementCard()
+        MeassurementCard( // 3D-card
+            R.drawable.threed,
+            "Image of woman scanning herself with her phone",
+            btn3DText,
+            {},
+            infoText3DDanish
+        )
+
+        MeassurementCard(
+            R.drawable.meassureself,
+            "Image of woman meassuring herself with a soft tape meassure",
+            btnManualDanish,
+            {},
+            infoTextManualDanish
+        )
+
+        ReminderButton {  }
     }
 }
 @Composable
-fun MeassurementCard() { // use same for both so that changes can be made for both in one place
+fun MeassurementCard( // use same for both so that changes can be made for both in one place
+    image: Int,
+    imageDescription: String,
+    buttonText: String,
+    onClick: () -> Unit,
+    infoTextInLanguage: String) {
 
     var showInfo by remember { // remembers wheter or not info should be shown
         mutableStateOf(false) // does so that info is automatically not shown
     }
 
     Card( // makes it easy to reuse
-        shape = RoundedCornerShape(15.dp)
+        shape = RoundedCornerShape(15.dp),
+        modifier = Modifier
+            .padding(30.dp)
     ) {
         Box { // box used so things can be placed on top of each other
             Image(
-                painter = painterResource(id = R.drawable.threed), // TODO: at gøre til parameter
-                contentDescription = "", // TODO: at gøre til parameter
-                modifier = Modifier.clip(RoundedCornerShape(15.dp)),
+                painter = painterResource(id = image),
+                contentDescription = imageDescription,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .clip(RoundedCornerShape(15.dp))
             )
 
             ButtonOnCard(
-                text = btn3DText, // TODO: at gøre til parameter
-                onClick = { },
+                text = buttonText,
+                onClick = onClick,
                 modifier = Modifier.align(Alignment.Center))
 
             InfoIcon(
@@ -75,10 +111,10 @@ fun MeassurementCard() { // use same for both so that changes can be made for bo
                 Box(
                     modifier = Modifier
                         .padding(20.dp)
-                        .matchParentSize(), // 👈 vigtigt: fylder hele kortet
+                        .matchParentSize(), // won't exit parent card
                     contentAlignment = Alignment.Center
                 ) {
-                    InfoCard()
+                    InfoCard(infoText = infoTextInLanguage)
                 }
             }
 
@@ -118,14 +154,17 @@ fun InfoIcon(
     ) {
         Icon(
             imageVector = Icons.Default.Info,
-            contentDescription = "Info",
+            contentDescription = "Infoicon",
             tint = Color.White
         )
     }
 }
 
 @Composable
-fun InfoCard(modifier: Modifier = Modifier){
+fun InfoCard(
+    modifier: Modifier = Modifier,
+    infoText: String
+){
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(20.dp),
@@ -135,8 +174,42 @@ fun InfoCard(modifier: Modifier = Modifier){
     ) {
 
         Text(
-            text = "Vores smarte 3D-scanner er en af de nemmeste måder at måle dig selv på med en 97% nøjagtighed.",
+            text = infoText,
             modifier = Modifier.padding(20.dp)
         )
+    }
+}
+
+@Composable
+fun ReminderButton(
+    onClick: () -> Unit
+) {
+
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(20.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFFFFB58A)
+        )
+    ) {
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(8.dp)
+        ) {
+
+            Text(
+                text = "Har du ikke tid lige nu?",
+                fontSize = 12.sp,
+                color = Color.White
+            )
+
+            Text(
+                text = "Påmind mig senere",
+                fontSize = 22.sp,
+                color = Color.White
+            )
+
+        }
     }
 }
