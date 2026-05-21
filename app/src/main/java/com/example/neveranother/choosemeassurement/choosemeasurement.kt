@@ -31,7 +31,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.neveranother.ui.theme.NohemiFontFamily
+import com.example.neveranother.viewmodels.NAviewmodel
 
 //these are the texts for the page in differnt languages
 val btn3DText: String = "3D-scan"
@@ -46,35 +50,56 @@ val infoTextManualEnglish: String ="You will follow a step by step guide that ca
 
 
     @Composable
-fun Choosemeasurement(){
+fun Choosemeasurement(
+        NAviewmodel: NAviewmodel,
+        goToManual: () -> Unit,
+        goToScanner: () -> Unit
+){
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        Text(
+            text = "Vælg Målemetode",
+            fontFamily = NohemiFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp,
+            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
+        )
+
         MeassurementCard( // 3D-card
             R.drawable.threed,
             "Image of woman scanning herself with her phone",
             btn3DText,
-            {},
+            goToScanner,
             infoText3DDanish
         )
 
-        Row{
+        Row(
+            modifier = Modifier.padding(horizontal = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 imageVector = Icons.Default.Info,
                 contentDescription = "Infoicon",
-                tint = Color.Black
+                tint = Color.Black,
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(end = 4.dp)
             )
 
-            Text("Alt data bliver slettet efter brug af 3D-scanneren. Bruges med tætsiddende tøj.")
+            Text(
+                text = "Alt data bliver slettet efter brug af 3D-scanneren. Bruges med tætsiddende tøj.",
+                fontSize = 12.sp
+            )
         }
 
         MeassurementCard(
             R.drawable.meassureself,
             "Image of woman meassuring herself with a soft tape meassure",
             btnManualDanish,
-            {},
+            goToManual,
             infoTextManualDanish
         )
 
@@ -96,7 +121,8 @@ fun MeassurementCard( // use same for both so that changes can be made for both 
     Card( // makes it easy to reuse
         shape = RoundedCornerShape(15.dp),
         modifier = Modifier
-            .padding(30.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
     ) {
         Box { // box used so things can be placed on top of each other
             Image(
@@ -149,7 +175,12 @@ fun ButtonOnCard(
             containerColor = Color(0xFFFF5F00)
         )
     ) {
-        Text(text)
+        Text(
+            text = text,
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+        )
     }
 }
 
@@ -198,10 +229,11 @@ fun ReminderButton(
 
     Button(
         onClick = onClick,
-        shape = RoundedCornerShape(20.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFFB58A)
-        )
+        shape = RoundedCornerShape(15.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB58A)),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
     ) {
 
         Column(
