@@ -1,28 +1,22 @@
 package com.example.neveranother.productpage
 
 import android.os.Build.VERSION.SDK_INT
-import android.view.Menu
-import android.view.RoundedCorner
-import androidx.annotation.experimental.Experimental
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -43,17 +37,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
@@ -64,16 +55,14 @@ import coil.request.ImageRequest
 import com.example.neveranother.R
 import com.example.neveranother.components.NABodyText
 import com.example.neveranother.components.NAHeader1
-import com.example.neveranother.components.NAHeader2
 import com.example.neveranother.ui.theme.NAbackgroundColor
 import com.example.neveranother.ui.theme.NAtextBlack
-import com.example.neveranother.ui.theme.NeverAnotherTheme
-import kotlin.math.round
 
 
 @Composable
 fun Dropdown(
     title: String,
+    fontSize: TextUnit = 20.sp,
     content: @Composable () -> Unit
 ) {
     var isExpanded by remember { mutableStateOf(false) }
@@ -91,7 +80,7 @@ fun Dropdown(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            NABodyText(title)
+            NABodyText(title, fontSize = fontSize, modifier = Modifier.weight(1f))
 
             if (isExpanded) {
                 Icon(
@@ -112,7 +101,6 @@ fun Dropdown(
         if (isExpanded) {
             content()
         }
-
     }
 }
 
@@ -146,7 +134,7 @@ fun Product() {
             contentDescription = "Product images",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(250.dp)
                 .align(Alignment.CenterHorizontally),
             contentScale = ContentScale.Crop
         )
@@ -248,6 +236,7 @@ fun Product() {
             NABodyText("Indtast mål før du kan ligge i kurv", fontSize = 15.sp)
         }
     }
+    BorderLine()
 }
 
 @Composable
@@ -259,7 +248,6 @@ fun BorderLine() {
         color = Color.LightGray
     )
 }
-
 
 @Composable
 fun Measurement() {
@@ -278,12 +266,18 @@ fun Measurement() {
         ) {
             NABodyText("Tag mine mål", color = NAbackgroundColor)
         }
-        Dropdown("Jeg har allerede mine mål", { dropdownContent1() })
+        Dropdown("Jeg har allerede mine mål") { dropdownContent1() }
     }
+    BorderLine()
 }
 
 @Composable
 fun dropdownContent1() {
+    var upperCircum by rememberSaveable { mutableStateOf("") }
+    var lowerCircum by rememberSaveable { mutableStateOf("") }
+    var chestWidth by rememberSaveable { mutableStateOf("") }
+    var chestHeight by rememberSaveable { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -302,48 +296,48 @@ fun dropdownContent1() {
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            var upperCircum by rememberSaveable { mutableStateOf("") }
 
             OutlinedTextField(
                 upperCircum,
                 onValueChange = { upperCircum = it },
-                label = { Text("Øvre omkreds") },
-                modifier = Modifier.weight(1f)
+                label = { Text("Øvre omkreds", fontSize = 15.sp) },
+                modifier = Modifier.weight(1f),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
 
             )
-
-            var lowerCircum by rememberSaveable { mutableStateOf("") }
 
             OutlinedTextField(
                 lowerCircum,
                 onValueChange = { lowerCircum = it },
-                label = { Text("Nedre omkreds") },
-                modifier = Modifier.weight(1f)
+                label = { Text("Nedre omkreds", fontSize = 15.sp) },
+                modifier = Modifier.weight(1f),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+
             )
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
 
         ) {
-            var chestWidth by rememberSaveable { mutableStateOf("") }
-
             OutlinedTextField(
                 chestWidth,
                 onValueChange = { chestWidth = it },
-                label = { Text("Brystbredde") },
-                modifier = Modifier.weight(1f)
-            )
+                label = { Text("Brystbredde", fontSize = 15.sp) },
+                modifier = Modifier.weight(1f),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
 
-            var chestHeight by rememberSaveable { mutableStateOf("") }
+            )
 
             OutlinedTextField(
                 chestHeight,
                 onValueChange = { chestHeight = it },
-                label = { Text("Brysthøjde") },
-                modifier = Modifier.weight(1f)
+                label = { Text("Brysthøjde", fontSize = 15.sp) },
+                modifier = Modifier.weight(1f),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+
             )
         }
         DropdownSelector()
@@ -428,7 +422,6 @@ fun DropdownSelector() {
         }
     }
 }
-
 
 @Composable
 fun GIFLoader(
@@ -542,5 +535,81 @@ fun FAQ() {
     ) {
         NAHeader1("FAQ", fontSize = 50.sp)
 
+        BorderLine()
+
+        Dropdown("Hvornår vil jeg modtage min ordre?", fontSize = 16.sp) {
+            DropdownContent2("Vi bestræber os på at levere din bh inden for 6 uger. NEVER ANOTHER er stadig en startup, og da vi arbejder med produktionsvinduer og målsyede produkter, er leveringstiderne længere, end hvad fast fashion-branchen normalt kan tilbyde. Vi gør vores bedste for at minimere ventetiden, og vi takker for din tålmodighed.")
+        }
+
+        BorderLine()
+
+        Dropdown("Hvilke lande fragter i til?", fontSize = 16.sp) {
+            DropdownContent2(
+                "Vi sender i øjeblikket til følgende lande:\n" +
+                        "Danmark, Østrig, Belgien, Frankrig, Tyskland, Italien, Luxembourg, Holland og Sverige.\n" +
+                        "\n" +
+                        "Pakkerne sendes fra Danmark.\n" +
+                        "Hvis du ønsker, at vi skal sende til et land, der ikke er på listen, bedes du sende os en besked."
+            )
+        }
+
+        BorderLine()
+
+        Dropdown("Kan jeg få hjælp til at måle mig selv?", fontSize = 16.sp) {
+            DropdownContent2(
+                "Ja! Hvis du synes, det er svært at gennemgå guidevideoerne, kan du arrangere en online prøvning ved at booke en tid her.\n" +
+                        "\n" +
+                        "Hvis der ikke er flere ledige tider, eller de tilgængelige tider ikke passer dig, bedes du tjekke igen snart eller sende os en besked."
+            )
+        }
+
+        BorderLine()
+
+        Dropdown("Kan jeg returnere min ordre?", fontSize = 16.sp) {
+            DropdownContent2(
+                "Når du afgiver en ordre, fremstiller vi et skræddersyet produkt, der ikke er en standardstørrelse, og som ikke kan videresælges. På grund af karakteren af vores specialfremstillede produkter tilbyder vi derfor ikke fuld returret.\n" +
+                        "\n" +
+                        "Vi tilbyder dog en fuld bytteservice, hvis det leverede produkt ikke stemmer overens med ordren, for eksempel hvis du har modtaget en forkert farve, eller hvis produktet har fabrikationsfejl.\n" +
+                        "Hvis din bh imidlertid ikke passer dig, tilbyder vi en gratis størrelsesgaranti. Se venligst nedenfor."
+            )
+        }
+
+        BorderLine()
+
+        Dropdown("Hvad hvis min BH ikke passer mig?", fontSize = 16.sp) {
+            DropdownContent2(
+                "Hvis din bh ikke passer dig, tilbyder vi en gratis størrelsesgaranti. I det tilfælde vil vi justere målene og sende en ny bh uden beregning.\n" +
+                        "\n" +
+                        "For at være berettiget til en ombytning skal du deltage i et videoopkald sammen med os, så vi kan identificere problemet og finde en løsning.\n" +
+                        "\n" +
+                        "Bemærk venligst, at mange kroppe ændrer sig i størrelse i løbet af menstruationscyklussen. Hvis din bh ikke passer ved levering, bør du overveje, om det kan skyldes timingen i din cyklus.\n" +
+                        "\n" +
+                        "Vores mål er at tilbyde dig den bedst mulige pasform, og vi hører altid gerne din feedback.\n" +
+                        "\n" +
+                        "Hvis du har brug for at benytte vores størrelsesgaranti, bedes du kontakte os her.\n" +
+                        "\n" +
+                        "Du kan læse mere om vores størrelsesgaranti i vores handelsbetingelser."
+            )
+        }
+
+        BorderLine()
+
+        Dropdown("Er alle størrelser tilgængelige?", fontSize = 16.sp) {
+            DropdownContent2(
+                "NEVER ANOTHER er en startup-virksomhed – vi har en mission om at tilbyde den bedst mulige bh til alle kropstyper og størrelser. Det er en lang rejse, og vi har været nødt til at sikre os, at vores design fungerer perfekt til et bestemt størrelsesinterval i første omgang.\n" +
+                        "\n" +
+                        "Det betyder, at we endnu ikke har et produkt til alle, men vi når dertil, og vi arbejder hårdt på at sikre, at du også kan få din personlige NEVER ANOTHER-bh.\n" +
+                        "\n" +
+                        "Start med at designe din bh og gennemfør de første 2 måletrin for at se, om vi kan lave en til dig. Hvis det viser sig, at vi endnu ikke har en bh til dig, så tilmeld dig vores nyhedsbrev for at være den første, der får besked, når vi har."
+            )
+        }
+
+        BorderLine()
+
+        Dropdown("Hvor er NEVER ANOTHER fra?", fontSize = 16.sp) {
+            DropdownContent2("Vi er danske med kontorer i København og Aarhus. Vi producerer i Holland hos vores betroede produktionspartner.")
+        }
+
+        BorderLine()
     }
 }

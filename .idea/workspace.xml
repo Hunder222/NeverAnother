@@ -26,21 +26,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Made part of productpage :)">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/check_mark.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/firmer_bottom_volumen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/firmer_top_volumen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/heart.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/softer_bottom_volumen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/softer_top_volumen.png" afterDir="false" />
+    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Almost done with productpage and did some changes in NA components with style">
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/components/NAcomponents.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/components/NAcomponents.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/productpage/components.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/productpage/components.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/productpage/productpage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/productpage/productpage.kt" afterDir="false" />
     </list>
@@ -524,26 +516,35 @@
       <option name="project" value="LOCAL" />
       <updated>1779265469278</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Almost done with productpage and did some changes in NA components with style">
+      <option name="closed" value="true" />
+      <created>1779357726396</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1779357726396</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init" />
     <MESSAGE value="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents" />
     <MESSAGE value="Made part of productpage :)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made part of productpage :)" />
+    <MESSAGE value="Almost done with productpage and did some changes in NA components with style" />
+    <option name="LAST_COMMIT_MESSAGE" value="Almost done with productpage and did some changes in NA components with style" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
       <map>
         <entry key="com.example.neveranother">
           <value>
-            <CheckInfo lastCheckTimestamp="1779265453197" />
+            <CheckInfo lastCheckTimestamp="1779357720440" />
           </value>
         </entry>
         <entry key="com.example.neveranother.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1779265453194" />
+            <CheckInfo lastCheckTimestamp="1779357720438" />
           </value>
         </entry>
       </map>
