@@ -44,7 +44,9 @@ fun Navigatior(
             Productpage()
         }
         composable("choosemeasurement"){
-            Choosemeasurement()
+            Choosemeasurement(NAviewmodel,
+                {navController.navigate("manual")},
+                {navController.navigate("scanner")})
         }
         composable("manual"){
             Manual()
