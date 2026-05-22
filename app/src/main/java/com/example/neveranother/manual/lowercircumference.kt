@@ -1,5 +1,6 @@
 package com.example.neveranother.manual
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,9 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.neveranother.R
 import com.example.neveranother.ui.theme.NAtextBlack
 import com.example.neveranother.ui.theme.NAwarmGrey
 import com.example.neveranother.ui.theme.NohemiFontFamily
@@ -62,9 +66,18 @@ fun LowerCircumference(
                 contentAlignment = Alignment.Center
             ) {
                 if (selectedTab == "Visuel") {
-                    Text("Visuel Illustration Her", color = NAtextBlack.copy(alpha = 0.6f))
+                    Image(
+                        painter = painterResource(id = R.drawable.lowercircumference),
+                        contentDescription = "Nedre Omkreds Illustration",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit
+                    )
                 } else {
-                    Text("Video Guide Her", color = NAtextBlack.copy(alpha = 0.6f))
+                    VideoPlayer(
+                        videoResId = R.raw.video_2,
+                        isMuted = viewModel.isVideoMuted,
+                        onMuteChange = { viewModel.isVideoMuted = it }
+                    )
                 }
             }
 

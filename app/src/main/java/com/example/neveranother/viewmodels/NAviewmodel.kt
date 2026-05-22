@@ -28,6 +28,9 @@ class NAviewmodel: ViewModel() {
     var chestWidth by mutableStateOf("")
     var chestHeight by mutableStateOf("")
 
+    // Video Sound State
+    var isVideoMuted by mutableStateOf(true)
+
     // List to save completed measurements
     val savedMeasurements = mutableStateListOf<Measurement>()
 
