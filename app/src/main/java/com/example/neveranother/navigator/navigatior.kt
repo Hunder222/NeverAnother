@@ -10,6 +10,7 @@ import com.example.neveranother.Temppage
 import com.example.neveranother.cart.Cart
 import com.example.neveranother.choosemeassurement.Choosemeasurement
 import com.example.neveranother.frontpage.Frontpage
+import com.example.neveranother.history.History
 import com.example.neveranother.manual.ChestHeight
 import com.example.neveranother.manual.ChestVolume
 import com.example.neveranother.manual.Results
@@ -44,13 +45,13 @@ fun Navigatior(
     ) {
         composable("temppage") {
             Temppage(
-                NAviewmodel,
-                goToFrontpage = {navController.navigate("frontpage")},
-                goToProductpage = {navController.navigate("productpage")},
-                goToChoosemeasurement = {navController.navigate("choosemeasurement")},
-                goToManual = {navController.navigate("manual")},
-                goToScanner = {navController.navigate("scanner")},
-                goToCart = {navController.navigate("cart")}
+                goToFrontpage = { navController.navigate("frontpage") },
+                goToProductpage = { navController.navigate("productpage") },
+                goToChoosemeasurement = { navController.navigate("choosemeasurement") },
+                goToManual = { navController.navigate("manual") },
+                goToScanner = { navController.navigate("scanner") },
+                goToCart = { navController.navigate("cart") },
+                goToHistory = { navController.navigate("history") }
             )
         }
         composable("frontpage") {
@@ -110,10 +111,19 @@ fun Navigatior(
             )
         }
         composable("scanner"){
-            Scanner()
+            Scanner(
+                onBack = { navController.popBackStack() },
+                onScanComplete = { navController.navigate("results") }
+            )
         }
         composable("cart"){
             Cart()
+        }
+        composable("history"){
+            History(
+                viewModel = NAviewmodel,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }

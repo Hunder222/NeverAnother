@@ -30,7 +30,7 @@ import com.example.neveranother.ui.theme.NeverAnotherTheme
 import com.example.neveranother.R
 import com.example.neveranother.navigator.Navigatior
 import com.example.neveranother.ui.theme.NAbackgroundColor
-import com.example.neveranother.viewmodels.NAViewModel
+import com.example.neveranother.viewmodels.NAviewmodel
 
 
 class MainActivity : ComponentActivity() {
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                     color = NAbackgroundColor
                 ) {
                     // init our never another viewmodel
-                    val NAviewModel: NAViewModel = viewModel()
+                    val NAviewModel: NAviewmodel = viewModel()
                     Column(
                         // padding on app, so within status bar and android navigation bar
                         modifier = Modifier.systemBarsPadding()

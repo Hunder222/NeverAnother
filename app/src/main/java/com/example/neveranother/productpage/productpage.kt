@@ -97,8 +97,9 @@ fun Productpage() {
 
             FAQ()
 
+            BorderLine()
+
+            Measurement()
         }
     }
 }
-
-
