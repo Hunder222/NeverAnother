@@ -10,6 +10,7 @@ import com.example.neveranother.Temppage
 import com.example.neveranother.cart.Cart
 import com.example.neveranother.choosemeassurement.Choosemeasurement
 import com.example.neveranother.frontpage.Frontpage
+import com.example.neveranother.history.History
 import com.example.neveranother.manual.ChestHeight
 import com.example.neveranother.manual.ChestVolume
 import com.example.neveranother.manual.Results
@@ -50,7 +51,8 @@ fun Navigatior(
                 goToChoosemeasurement = {navController.navigate("choosemeasurement")},
                 goToManual = {navController.navigate("manual")},
                 goToScanner = {navController.navigate("scanner")},
-                goToCart = {navController.navigate("cart")}
+                goToCart = {navController.navigate("cart")},
+                goToHistory = {navController.navigate("history")}
             )
         }
         composable("frontpage") {
@@ -114,6 +116,12 @@ fun Navigatior(
         }
         composable("cart"){
             Cart()
+        }
+        composable("history") {
+            History(
+                viewModel = NAviewmodel,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
