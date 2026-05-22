@@ -326,7 +326,7 @@ fun Frontpage(
             ProductInfo(
                 R.drawable.check_mark,
                 "Størrelsesgaranti",
-                "Vi ønsker, at du skal elske din bh. Pasformen er ikke perfekt? Vi tilbyder en gratis størrelsesgaranti! Se venligst ofte stillede spørgsmål nedenfor for at få mere at vide."
+                "Vi ønsker, at du skal elske din bh. Pasformen er ikke perfekt? Vi tilbyder en gratis størrelsesgaranti!"
             )
             }
 /*
@@ -398,9 +398,11 @@ fun Frontpage(
         }
     }
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun FrontpagePreview() {
     Frontpage()
 }
+
+ */
