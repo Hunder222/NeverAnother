@@ -18,9 +18,7 @@ data class Measurement(
     val date: String = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
 )
 
-class NAviewmodel: ViewModel() {
-    val userName = "Anette"
-
+class NAViewModel: ViewModel() {
     // Measurements
     var upperCircumference by mutableStateOf("")
     var lowerCircumference by mutableStateOf("")
@@ -41,6 +39,18 @@ class NAviewmodel: ViewModel() {
             chestVolume = chestVolume,
             chestWidth = chestWidth,
             chestHeight = chestHeight
+        )
+        savedMeasurements.add(measurement)
+    }
+
+    fun saveScannerResults() {
+        // Simulating scanner results for now
+        val measurement = Measurement(
+            upperCircumference = "85",
+            lowerCircumference = "72",
+            chestVolume = "Medium",
+            chestWidth = "40",
+            chestHeight = "25"
         )
         savedMeasurements.add(measurement)
     }
