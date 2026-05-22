@@ -147,15 +147,7 @@ fun Product() {
 
         // Images updates based on state
         ProductImageViewer(isColorSelected)
-        /*Image(
-            painter = painterResource(id = productImage),
-            contentDescription = "Product images",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp)
-                .align(Alignment.CenterHorizontally),
-            contentScale = ContentScale.Crop
-        )*/
+
         Row(
             modifier = Modifier
                 .padding(vertical = 15.dp)
@@ -672,28 +664,28 @@ fun FAQ() {
 }
 
 
+// the following code is by Rosalina
 @Composable
 fun ProductImageViewer(isColorSelected: Boolean) {
     val images = if (isColorSelected) {
-        listOf(R.drawable.na_prod_white, R.drawable.na_prod_white_2, R.drawable.na_prod_white_3)
+        listOf(R.drawable.na_prod_white, R.drawable.na_prod_white_2, R.drawable.na_prod_white_3) // images in lists to help with code later (forEach)
     } else {
         listOf(R.drawable.na_prod_black, R.drawable.na_prod_black_2, R.drawable.na_prod_black_3)
     }
 
-    var currentIndex by remember { mutableStateOf(0) }
+    var currentIndex by remember { mutableStateOf(0) } // starts on first image
 
-    // Zoom state
-    var scale by remember { mutableStateOf(1f) }
+
+    var scale by remember { mutableStateOf(1f) } // remembers how zoomed in the fingers are
     var offset by remember { mutableStateOf(Offset.Zero) }
 
     val transformableState = rememberTransformableState { zoomChange, offsetChange, _ ->
-        scale = (scale * zoomChange).coerceIn(1f, 4f)
+        scale = (scale * zoomChange).coerceIn(1f, 4f) // makes it so that the image can't be made smaller than it is and not biiger than 4 times its size
         if (scale > 1f) offset += offsetChange
     }
 
-    LaunchedEffect(transformableState.isTransformInProgress) {
-        if (!transformableState.isTransformInProgress) {
-            // Når brugeren giver slip, snap tilbage
+    LaunchedEffect(transformableState.isTransformInProgress) { // runs the code every time isTransformInProgress changes
+        if (!transformableState.isTransformInProgress) { // snaps back if the fingers let go so that the image doen't stay away from its place
             scale = 1f
             offset = Offset.Zero
         }
@@ -706,23 +698,23 @@ fun ProductImageViewer(isColorSelected: Boolean) {
     ) {
         Image(
             painter = painterResource(id = images[currentIndex]),
-            contentDescription = "Produktbillede",
+            contentDescription = "Productpicture",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
-                .graphicsLayer(
-                    scaleX = scale,
+                .graphicsLayer( // changes picture only, not layout
+                    scaleX = scale, // is in charge of zoom/size
                     scaleY = scale,
-                    translationX = offset.x,
+                    translationX = offset.x, // is in change of position on page
                     translationY = offset.y
                 )
-                .transformable(state = transformableState)
+                .transformable(state = transformableState) // links fingermovemnet with picture
                 .clip(RoundedCornerShape(8.dp)),
             contentScale = ContentScale.Crop
         )
 
-        // Venstre pil
-        if (currentIndex > 0) {
+        // left arrow
+        if (currentIndex > 0) { // remembers what picture is shown
             IconButton(
                 onClick = {
                     currentIndex--
@@ -731,15 +723,15 @@ fun ProductImageViewer(isColorSelected: Boolean) {
                 },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
-                Icon(
+                Icon( // arrow
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Forrige billede",
+                    contentDescription = "Last picture",
                     tint = Color.White
                 )
             }
         }
 
-        // Højre pil
+        // right arrow
         if (currentIndex < images.size - 1) {
             IconButton(
                 onClick = {
@@ -751,27 +743,27 @@ fun ProductImageViewer(isColorSelected: Boolean) {
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
-                    contentDescription = "Næste billede",
+                    contentDescription = "Next picture",
                     tint = Color.White
                 )
             }
         }
 
-        // Prik-indikator nederst
+        // Dots on bottom of picture
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            images.indices.forEach { index ->
+            images.indices.forEach { index -> // makes a dot for every image
                 Box(
                     modifier = Modifier
                         .size(8.dp)
                         .clip(CircleShape)
                         .background(
                             if (index == currentIndex) Color.White
-                            else Color.White.copy(alpha = 0.5f)
+                            else Color.White.copy(alpha = 0.5f) // slightly transparent when not the picture shown
                         )
                 )
             }

@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import com.example.neveranother.ui.theme.NohemiFontFamily
 import com.example.neveranother.viewmodels.NAviewmodel
 
+// code written by Rosalina
+
 //these are the texts for the page in differnt languages
 val btn3DText: String = "3D-scan"
 
