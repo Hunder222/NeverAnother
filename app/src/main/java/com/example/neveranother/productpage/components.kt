@@ -57,6 +57,18 @@ import com.example.neveranother.components.NABodyText
 import com.example.neveranother.components.NAHeader1
 import com.example.neveranother.ui.theme.NAbackgroundColor
 import com.example.neveranother.ui.theme.NAtextBlack
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.draw.clip
 
 // Reusable dropdown function
 @Composable
@@ -134,7 +146,8 @@ fun Product() {
             if (isColorSelected) R.drawable.na_prod_white else R.drawable.na_prod_black
 
         // Images updates based on state
-        Image(
+        ProductImageViewer(isColorSelected)
+        /*Image(
             painter = painterResource(id = productImage),
             contentDescription = "Product images",
             modifier = Modifier
@@ -142,7 +155,7 @@ fun Product() {
                 .height(250.dp)
                 .align(Alignment.CenterHorizontally),
             contentScale = ContentScale.Crop
-        )
+        )*/
         Row(
             modifier = Modifier
                 .padding(vertical = 15.dp)
@@ -655,5 +668,113 @@ fun FAQ() {
         }
 
         BorderLine()
+    }
+}
+
+
+@Composable
+fun ProductImageViewer(isColorSelected: Boolean) {
+    val images = if (isColorSelected) {
+        listOf(R.drawable.na_prod_white, R.drawable.na_prod_white_2, R.drawable.na_prod_white_3)
+    } else {
+        listOf(R.drawable.na_prod_black, R.drawable.na_prod_black_2, R.drawable.na_prod_black_3)
+    }
+
+    var currentIndex by remember { mutableStateOf(0) }
+
+    // Zoom state
+    var scale by remember { mutableStateOf(1f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+
+    val transformableState = rememberTransformableState { zoomChange, offsetChange, _ ->
+        scale = (scale * zoomChange).coerceIn(1f, 4f)
+        if (scale > 1f) offset += offsetChange
+    }
+
+    LaunchedEffect(transformableState.isTransformInProgress) {
+        if (!transformableState.isTransformInProgress) {
+            // Når brugeren giver slip, snap tilbage
+            scale = 1f
+            offset = Offset.Zero
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
+    ) {
+        Image(
+            painter = painterResource(id = images[currentIndex]),
+            contentDescription = "Produktbillede",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .graphicsLayer(
+                    scaleX = scale,
+                    scaleY = scale,
+                    translationX = offset.x,
+                    translationY = offset.y
+                )
+                .transformable(state = transformableState)
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+
+        // Venstre pil
+        if (currentIndex > 0) {
+            IconButton(
+                onClick = {
+                    currentIndex--
+                    scale = 1f
+                    offset = Offset.Zero
+                },
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Forrige billede",
+                    tint = Color.White
+                )
+            }
+        }
+
+        // Højre pil
+        if (currentIndex < images.size - 1) {
+            IconButton(
+                onClick = {
+                    currentIndex++
+                    scale = 1f
+                    offset = Offset.Zero
+                },
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowForward,
+                    contentDescription = "Næste billede",
+                    tint = Color.White
+                )
+            }
+        }
+
+        // Prik-indikator nederst
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            images.indices.forEach { index ->
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (index == currentIndex) Color.White
+                            else Color.White.copy(alpha = 0.5f)
+                        )
+                )
+            }
+        }
     }
 }
