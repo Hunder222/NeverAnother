@@ -16,20 +16,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Implement manual measurement flow and navigation&#10;&#10;- Add a 5-step manual measurement process including components for Upper/Lower Circumference, Chest Volume, Chest Width, and Chest Height.&#10;- Create `ManualComponents.kt` with shared UI elements like progress bars, navigation buttons, and input sections.&#10;- Update `NAviewmodel.kt` to manage measurement state and persistence.&#10;- Configure `navigatior.kt` with horizontal slide transitions and new routes for the measurement flow and results screen.&#10;- Add a `Results` screen to display collected measurement data before saving to the cart.">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/1.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/2.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/3.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/4.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bottom_volume_firmer.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bottom_volume_softer.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chestheight.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chestwidth.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lowercircumference.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/top_volume_firmer.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/top_volume_softer.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/uppercircumference.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/checksums/checksums.lock" afterDir="false" />
+    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Implement scanner functionality and refactor ViewModel&#10;&#10;- Added project-level IDE inspection profiles.&#10;- Updated `compileSdk` and `targetSdk` to 37 in `build.gradle.kts` and cleaned up redundant material icon dependencies.&#10;- Renamed `NAviewmodel` to `NAViewModel` for consistent casing across the project.&#10;- Implemented the `Choosemeasurement` screen with options for manual entry or 3D scanning.&#10;- Added a functional `Scanner` component with a simulated scanning progress indicator.&#10;- Updated `NAViewModel` with `saveScannerResults` and removed hardcoded user data.&#10;- Refactored `Navigator` to handle new navigation paths for the scanner and measurement selection.&#10;- Added placeholder video assets in `res/raw`.">
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" afterDir="false" />
@@ -37,12 +24,10 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/ManualComponents.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/ManualComponents.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestheight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestheight.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestvolume.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestvolume.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestwidth.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestwidth.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/lowercircumference.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/lowercircumference.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/uppercircumference.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/uppercircumference.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/history/History.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/history/History.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/navigator/navigatior.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/navigator/navigatior.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/scanner.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/scanner.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/viewmodels/NAviewmodel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/viewmodels/NAviewmodel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,6 +93,9 @@
   }
 }</component>
   <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.3.1-bin/23ovyewtku6u96viwx3xl3oks/gradle-9.3.1" javaHome="$APPLICATION_HOME_DIR$/jbr/Contents/Home" gradleVersion="9.3.1" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -119,22 +107,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;app.teamhub.selectedTeam&quot;: &quot;https://github.com/Hunder222/NeverAnother&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;manual-measurement&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "app.teamhub.selectedTeam": "https://github.com/Hunder222/NeverAnother",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "#4 on Rebasing manual-measurement",
+    "kotlin-language-version-configured": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video" />
@@ -245,26 +233,36 @@
       <option name="project" value="LOCAL" />
       <updated>1779266612479</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add measurement history and video support&#10;&#10;- Integrated `androidx.media3` for video playback support.&#10;- Implemented a shared `VideoPlayer` component with mute/unmute functionality.&#10;- Added visual illustrations and video guides to manual measurement steps (upper/lower circumference, chest width/height, and chest volume).&#10;- Introduced a `History` screen to view saved measurements and updated navigation to include it.&#10;- Added necessary drawable assets for measurement illustrations.">
+      <option name="closed" value="true" />
+      <created>1779438682018</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1779438682019</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init" />
     <MESSAGE value="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents" />
     <MESSAGE value="Implement manual measurement flow and navigation&#10;&#10;- Add a 5-step manual measurement process including components for Upper/Lower Circumference, Chest Volume, Chest Width, and Chest Height.&#10;- Create `ManualComponents.kt` with shared UI elements like progress bars, navigation buttons, and input sections.&#10;- Update `NAviewmodel.kt` to manage measurement state and persistence.&#10;- Configure `navigatior.kt` with horizontal slide transitions and new routes for the measurement flow and results screen.&#10;- Add a `Results` screen to display collected measurement data before saving to the cart." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement manual measurement flow and navigation&#10;&#10;- Add a 5-step manual measurement process including components for Upper/Lower Circumference, Chest Volume, Chest Width, and Chest Height.&#10;- Create `ManualComponents.kt` with shared UI elements like progress bars, navigation buttons, and input sections.&#10;- Update `NAviewmodel.kt` to manage measurement state and persistence.&#10;- Configure `navigatior.kt` with horizontal slide transitions and new routes for the measurement flow and results screen.&#10;- Add a `Results` screen to display collected measurement data before saving to the cart." />
+    <MESSAGE value="Add measurement history and video support&#10;&#10;- Integrated `androidx.media3` for video playback support.&#10;- Implemented a shared `VideoPlayer` component with mute/unmute functionality.&#10;- Added visual illustrations and video guides to manual measurement steps (upper/lower circumference, chest width/height, and chest volume).&#10;- Introduced a `History` screen to view saved measurements and updated navigation to include it.&#10;- Added necessary drawable assets for measurement illustrations." />
+    <MESSAGE value="Implement scanner functionality and refactor ViewModel&#10;&#10;- Added project-level IDE inspection profiles.&#10;- Updated `compileSdk` and `targetSdk` to 37 in `build.gradle.kts` and cleaned up redundant material icon dependencies.&#10;- Renamed `NAviewmodel` to `NAViewModel` for consistent casing across the project.&#10;- Implemented the `Choosemeasurement` screen with options for manual entry or 3D scanning.&#10;- Added a functional `Scanner` component with a simulated scanning progress indicator.&#10;- Updated `NAViewModel` with `saveScannerResults` and removed hardcoded user data.&#10;- Refactored `Navigator` to handle new navigation paths for the scanner and measurement selection.&#10;- Added placeholder video assets in `res/raw`." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement scanner functionality and refactor ViewModel&#10;&#10;- Added project-level IDE inspection profiles.&#10;- Updated `compileSdk` and `targetSdk` to 37 in `build.gradle.kts` and cleaned up redundant material icon dependencies.&#10;- Renamed `NAviewmodel` to `NAViewModel` for consistent casing across the project.&#10;- Implemented the `Choosemeasurement` screen with options for manual entry or 3D scanning.&#10;- Added a functional `Scanner` component with a simulated scanning progress indicator.&#10;- Updated `NAViewModel` with `saveScannerResults` and removed hardcoded user data.&#10;- Refactored `Navigator` to handle new navigation paths for the scanner and measurement selection.&#10;- Added placeholder video assets in `res/raw`." />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
       <map>
         <entry key="com.example.neveranother">
           <value>
-            <CheckInfo lastCheckTimestamp="1779102774186" />
+            <CheckInfo lastCheckTimestamp="1779438683279" />
           </value>
         </entry>
         <entry key="com.example.neveranother.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1779102774186" />
+            <CheckInfo lastCheckTimestamp="1779438683280" />
           </value>
         </entry>
       </map>
