@@ -139,7 +139,7 @@ fun Frontpage() {
             //fontFamily = nohemiBlack,
             fontSize = 16.sp,
             modifier =
-                Modifier.padding(top = 40.dp, start = 15.dp)
+                Modifier.padding(top = 70.dp, start = 15.dp)
         )
         Text(
             text = "Vi guider dig hele vejen.",
@@ -153,7 +153,7 @@ fun Frontpage() {
             text = "Når pasform føles \npersonlig",
             fontFamily = nohemiBlack,
             fontSize = 26.sp,
-            modifier = Modifier.padding(top = 40.dp, start = 15.dp)
+            modifier = Modifier.padding(top = 70.dp, start = 15.dp)
         )
         Text(
             text = "Hvad vores kunder siger",
@@ -248,7 +248,7 @@ fun Frontpage() {
             text = "Pasformsgaranti",
             fontFamily = nohemiBlack,
             fontSize = 26.sp,
-            modifier = Modifier.padding(top = 40.dp, start = 15.dp)
+            modifier = Modifier.padding(top = 70.dp, start = 15.dp)
         )
 
         Column(
