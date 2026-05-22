@@ -345,9 +345,7 @@ fun Frontpage(
 
  */
             Button(
-                onClick = {
-                    // Do something
-                },
+                onClick = onGoToProductpage,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = NAaccentColor
                 ),
