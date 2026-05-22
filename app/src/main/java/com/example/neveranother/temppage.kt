@@ -34,7 +34,8 @@ fun Temppage(
     goToManual: () -> Unit,
     goToScanner: () -> Unit,
     goToCart: () -> Unit,
-){
+    goToHistory: () -> Unit,
+) {
     // container for buttons, centered on the screen
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -95,6 +96,12 @@ fun Temppage(
             onClick = goToCart
         ){
             Text("Cart")
+        }
+
+        Button(
+            onClick = goToHistory
+        ){
+            Text("Målehistorik")
         }
     }
 }

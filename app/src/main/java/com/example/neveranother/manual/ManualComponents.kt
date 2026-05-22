@@ -1,5 +1,6 @@
 package com.example.neveranother.manual
 
+import androidx.annotation.OptIn
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -8,23 +9,95 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeOff
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAtextBlack
 import com.example.neveranother.ui.theme.NAwarmGrey
 import com.example.neveranother.ui.theme.NohemiFontFamily
+
+/**
+ * Shared Video Player component using Media3 ExoPlayer.
+ */
+@OptIn(UnstableApi::class)
+@Composable
+fun VideoPlayer(
+    videoResId: Int,
+    isMuted: Boolean,
+    onMuteChange: (Boolean) -> Unit
+) {
+    val context = LocalContext.current
+    
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            val mediaItem = MediaItem.fromUri("android.resource://${context.packageName}/$videoResId")
+            setMediaItem(mediaItem)
+            prepare()
+            repeatMode = Player.REPEAT_MODE_ONE
+            playWhenReady = true
+        }
+    }
+
+    // Update volume when isMuted changes
+    LaunchedEffect(isMuted) {
+        exoPlayer.volume = if (isMuted) 0f else 1f
+    }
+
+    DisposableEffect(videoResId) {
+        onDispose {
+            exoPlayer.release()
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView(
+            factory = { ctx ->
+                PlayerView(ctx).apply {
+                    player = exoPlayer
+                    useController = false
+                    resizeMode = androidx.media3.ui.AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+                    setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                }
+            },
+            modifier = Modifier.fillMaxSize()
+        )
+
+        // Mute/Unmute Button
+        IconButton(
+            onClick = { onMuteChange(!isMuted) },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(12.dp)
+                .background(Color.Black.copy(alpha = 0.5f), RoundedCornerShape(50))
+        ) {
+            Icon(
+                imageVector = if (isMuted) Icons.AutoMirrored.Filled.VolumeOff else Icons.AutoMirrored.Filled.VolumeUp,
+                contentDescription = if (isMuted) "Unmute" else "Mute",
+                tint = Color.White
+            )
+        }
+    }
+}
 
 /**
  * Shared Progress Bar for the 5-step manual measurement flow.

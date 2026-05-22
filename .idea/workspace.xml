@@ -10,42 +10,40 @@
           <theme>@style/Theme.NeverAnother</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/font/nohemi_font_family.xml">
-        <config>
-          <theme>@style/Theme.NeverAnother</theme>
-        </config>
-      </layout>
     </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents">
-      <change afterPath="$PROJECT_DIR$/.idea/markdown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/ManualComponents.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestheight.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestvolume.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestwidth.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/lowercircumference.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/results.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/uppercircumference.kt" afterDir="false" />
+    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Implement manual measurement flow and navigation&#10;&#10;- Add a 5-step manual measurement process including components for Upper/Lower Circumference, Chest Volume, Chest Width, and Chest Height.&#10;- Create `ManualComponents.kt` with shared UI elements like progress bars, navigation buttons, and input sections.&#10;- Update `NAviewmodel.kt` to manage measurement state and persistence.&#10;- Configure `navigatior.kt` with horizontal slide transitions and new routes for the measurement flow and results screen.&#10;- Add a `Results` screen to display collected measurement data before saving to the cart.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/1.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/2.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/3.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video/4.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bottom_volume_firmer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bottom_volume_softer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chestheight.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/chestwidth.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lowercircumference.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/top_volume_firmer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/top_volume_softer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/uppercircumference.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.3.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/manual.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/navigator/navigatior.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/navigator/navigatior.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/ui/theme/Type.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/ui/theme/Type.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/ManualComponents.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/ManualComponents.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestheight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestheight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestvolume.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestvolume.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestwidth.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/chestwidth.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/lowercircumference.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/lowercircumference.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/uppercircumference.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/uppercircumference.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/viewmodels/NAviewmodel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/viewmodels/NAviewmodel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,6 +137,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/video" />
       <recent name="C:\Users\Hunte\AndroidStudioProjects\NeverAnother\app\src\main\res\font" />
     </key>
   </component>
@@ -238,13 +237,22 @@
       <option name="project" value="LOCAL" />
       <updated>1779108068787</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Implement manual measurement flow and navigation&#10;&#10;- Add a 5-step manual measurement process including components for Upper/Lower Circumference, Chest Volume, Chest Width, and Chest Height.&#10;- Create `ManualComponents.kt` with shared UI elements like progress bars, navigation buttons, and input sections.&#10;- Update `NAviewmodel.kt` to manage measurement state and persistence.&#10;- Configure `navigatior.kt` with horizontal slide transitions and new routes for the measurement flow and results screen.&#10;- Add a `Results` screen to display collected measurement data before saving to the cart.">
+      <option name="closed" value="true" />
+      <created>1779266612479</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1779266612479</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init" />
     <MESSAGE value="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents" />
+    <MESSAGE value="Implement manual measurement flow and navigation&#10;&#10;- Add a 5-step manual measurement process including components for Upper/Lower Circumference, Chest Volume, Chest Width, and Chest Height.&#10;- Create `ManualComponents.kt` with shared UI elements like progress bars, navigation buttons, and input sections.&#10;- Update `NAviewmodel.kt` to manage measurement state and persistence.&#10;- Configure `navigatior.kt` with horizontal slide transitions and new routes for the measurement flow and results screen.&#10;- Add a `Results` screen to display collected measurement data before saving to the cart." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement manual measurement flow and navigation&#10;&#10;- Add a 5-step manual measurement process including components for Upper/Lower Circumference, Chest Volume, Chest Width, and Chest Height.&#10;- Create `ManualComponents.kt` with shared UI elements like progress bars, navigation buttons, and input sections.&#10;- Update `NAviewmodel.kt` to manage measurement state and persistence.&#10;- Configure `navigatior.kt` with horizontal slide transitions and new routes for the measurement flow and results screen.&#10;- Add a `Results` screen to display collected measurement data before saving to the cart." />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
