@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.neveranother.ui.theme.*
-import com.example.neveranother.viewmodels.NAviewmodel
+import com.example.neveranother.viewmodels.NAViewModel
 
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.withStyle
 
 @Composable
 fun Results(
-    NAviewmodel: NAviewmodel,
+    viewModel: NAViewModel,
     onBack: () -> Unit = {},
     onGoToCart: () -> Unit = {}
 ) {
@@ -73,11 +73,11 @@ fun Results(
             Spacer(modifier = Modifier.height(32.dp))
 
             // Result Cards
-            ResultCard(title = "Øvre Omkreds", value = "${NAviewmodel.upperCircumference} cm")
-            ResultCard(title = "Nedre Omkreds", value = "${NAviewmodel.lowerCircumference} cm")
-            ResultCard(title = "Volume", value = NAviewmodel.chestVolume)
-            ResultCard(title = "Brystbredde", value = "${NAviewmodel.chestWidth} cm")
-            ResultCard(title = "Brysthøjde", value = "${NAviewmodel.chestHeight} cm")
+            ResultCard(title = "Øvre Omkreds", value = "${viewModel.upperCircumference} cm")
+            ResultCard(title = "Nedre Omkreds", value = "${viewModel.lowerCircumference} cm")
+            ResultCard(title = "Volume", value = viewModel.chestVolume)
+            ResultCard(title = "Brystbredde", value = "${viewModel.chestWidth} cm")
+            ResultCard(title = "Brysthøjde", value = "${viewModel.chestHeight} cm")
 
             Spacer(modifier = Modifier.height(32.dp))
         }
