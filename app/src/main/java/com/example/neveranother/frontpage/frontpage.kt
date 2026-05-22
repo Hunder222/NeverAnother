@@ -326,7 +326,7 @@ fun Frontpage(
             ProductInfo(
                 R.drawable.check_mark,
                 "Størrelsesgaranti",
-                "Vi ønsker, at du skal elske din bh. Pasformen er ikke perfekt? Vi tilbyder en gratis størrelsesgaranti!"
+                "Vi ønsker, at du skal elske din BH. Er pasformen ikke perfekt, så tilbyder vi en gratis størrelsesgaranti!"
             )
             }
 /*
@@ -368,7 +368,7 @@ fun Frontpage(
             Column(
                 modifier = Modifier
                     .padding(top = 10.dp)
-                    .background(color = Color.Red.copy(alpha = 0.5f))
+                    .background(color = warmGrey)
                     .fillMaxWidth()
             ) {
 
