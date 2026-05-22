@@ -31,6 +31,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.ui.layout.ContentScale
 
 val nohemiBlack = FontFamily(
     Font(R.font.nohemi_black)
@@ -77,7 +78,7 @@ fun Frontpage() {
                     containerColor = NAaccentColor
                 ),
                 modifier = Modifier
-                    .padding(top = 280.dp, start = 15.dp)
+                    .padding(top = 270.dp, start = 15.dp)
                     .width(150.dp)
                     .shadow(
                         elevation = 3.dp,
@@ -97,16 +98,37 @@ fun Frontpage() {
                 fontFamily = nohemiBlack,
                 fontSize = 26.sp,
                 modifier =
-                    Modifier.padding(top = 340.dp, start = 15.dp)
+                    Modifier.padding(top = 330.dp, start = 15.dp)
+            )
+
+        }
+
+        Box {
+            Image(
+                painter = painterResource(id = R.drawable.bh_forsidebillede3),
+                contentDescription = "Frontpage image 3",
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.FillWidth
+            )
+
+
+            Text(
+                text = "Sig farvel til standardstørrelser",
+                fontFamily = nohemiBlack,
+                fontSize = 26.sp,
+                modifier =
+                    Modifier.padding(top = 310.dp, start = 15.dp)
             )
         }
 
+        /*
         Text(
             text = "Sig farvel til standardstørrelser",
             fontFamily = nohemiBlack,
             fontSize = 26.sp,
             modifier = Modifier.padding(top = 40.dp, start = 15.dp)
         )
+         */
 
         Text(
             text = "Traditionelle BH-størrelser har aldrig passet til alle kroppe.\n" +
@@ -117,7 +139,7 @@ fun Frontpage() {
             //fontFamily = nohemiBlack,
             fontSize = 16.sp,
             modifier =
-                Modifier.padding(top = 5.dp, start = 15.dp)
+                Modifier.padding(top = 40.dp, start = 15.dp)
         )
         Text(
             text = "Vi guider dig hele vejen.",
