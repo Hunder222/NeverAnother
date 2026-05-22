@@ -245,7 +245,7 @@ fun Frontpage() {
         }
 
         Text(
-            text = "Pasformsgaranti",
+            text = "Pasformsgaranti - test",
             fontFamily = nohemiBlack,
             fontSize = 26.sp,
             modifier = Modifier.padding(top = 70.dp, start = 15.dp)
