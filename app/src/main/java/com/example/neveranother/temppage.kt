@@ -21,20 +21,18 @@ import com.example.neveranother.components.NAMicroCopy
 import com.example.neveranother.ui.theme.Inter
 import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAbackgroundColor
-import com.example.neveranother.ui.theme.NohemiFontFamily
-import com.example.neveranother.viewmodels.NAviewmodel
 
 // This is a temporary view, used for development navigation, as proper navigation is not implemented yet
 @Composable
 fun Temppage(
-    NAviewmodel: NAviewmodel,
     goToFrontpage: () -> Unit,
     goToProductpage: () -> Unit,
     goToChoosemeasurement: () -> Unit,
     goToManual: () -> Unit,
     goToScanner: () -> Unit,
     goToCart: () -> Unit,
-){
+    goToHistory: () -> Unit,
+) {
     // container for buttons, centered on the screen
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -95,6 +93,12 @@ fun Temppage(
             onClick = goToCart
         ){
             Text("Cart")
+        }
+
+        Button(
+            onClick = goToHistory
+        ){
+            Text("Målehistorik")
         }
     }
 }

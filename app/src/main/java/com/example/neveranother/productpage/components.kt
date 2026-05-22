@@ -415,7 +415,7 @@ fun DropdownSelector() {
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-            // loops through the list and creates dropDownMenuItem for each one
+                // loops through the list and creates dropDownMenuItem for each one
                 options.forEach { option ->
                     DropdownMenuItem(
                         text = {
