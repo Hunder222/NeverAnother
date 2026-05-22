@@ -10,18 +10,13 @@
           <theme>@style/Theme.NeverAnother</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/font/nohemi_font_family.xml">
-        <config>
-          <theme>@style/Theme.NeverAnother</theme>
-        </config>
-      </layout>
     </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Eureka #2 - Freeze action">
+    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Eureka #3 - 3D model view">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/planningMode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/planningMode.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -232,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779357265473</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Eureka #3 - 3D model view">
+      <option name="closed" value="true" />
+      <created>1779435104924</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1779435104924</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -251,7 +254,8 @@
     <MESSAGE value="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents" />
     <MESSAGE value="Eureka #1 - breast curvature and marker tracking" />
     <MESSAGE value="Eureka #2 - Freeze action" />
-    <option name="LAST_COMMIT_MESSAGE" value="Eureka #2 - Freeze action" />
+    <MESSAGE value="Eureka #3 - 3D model view" />
+    <option name="LAST_COMMIT_MESSAGE" value="Eureka #3 - 3D model view" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">

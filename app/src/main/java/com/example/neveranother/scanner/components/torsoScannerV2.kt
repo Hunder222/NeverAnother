@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -62,6 +61,7 @@ import dev.romainguy.kotlin.math.dot
 import dev.romainguy.kotlin.math.normalize
 import io.github.sceneview.Scene
 import io.github.sceneview.collision.Ray
+import io.github.sceneview.collision.Vector3
 import io.github.sceneview.rememberCameraNode
 import io.github.sceneview.rememberCameraManipulator
 import io.github.sceneview.node.CameraNode
@@ -355,7 +355,7 @@ fun TorsoScannerV2() {
                 points = capturedPointCloud.toList(), // Pass stable snapshot
                 markerNodes = markerNodes,
                 sphereRadius = SPHERE_RADIUS,
-                onMarkerPlaced = { position ->
+                onMarkerPlaced = { _ ->
                     // No action needed here as PointCloudViewer now handles adding to its parentNode
                 }
             )
@@ -518,7 +518,7 @@ fun PointCloudViewer(
     points: List<Float3>,
     markerNodes: MutableList<Node>,
     sphereRadius: Float,
-    onMarkerPlaced: (Position) -> Unit
+    onMarkerPlaced: (Position) -> Unit = {}
 ) {
     val materialLoader = io.github.sceneview.rememberMaterialLoader(engine)
     
@@ -588,24 +588,27 @@ fun PointCloudViewer(
             // Use built-in gesture listener to avoid conflict with pointerInput
             onGestureListener = rememberOnGestureListener(
                 onSingleTapConfirmed = { motionEvent, _ ->
-                    Log.d("SCANNER_3D", "Tap detected via Listener at: ${motionEvent.x}, ${motionEvent.y}")
-                    Log.d("SCANNER_3D", "Camera World Pos: ${cameraNode.worldPosition}")
+                    Log.d("SCANNER_3D", "Tap detected at: ${motionEvent.x}, ${motionEvent.y}")
 
                     if (markerNodes.size < 3) {
-                        val ray = cameraNode.screenPointToRay(motionEvent.x, motionEvent.y)
-                        Log.d("SCANNER_3D", "Ray cast: Origin=${ray.origin}, Dir=${ray.direction}")
-                        
-                        val localPos = findNearestPointIn3DCloud(ray, points, centroid)
+                        // Perform 2D Screen-Space Snapping
+                        val localPos = findNearestPointIn3DCloud(
+                            tapX = motionEvent.x,
+                            tapY = motionEvent.y,
+                            points = points,
+                            centroid = centroid,
+                            cameraNode = cameraNode
+                        )
                         
                         if (localPos != null) {
-                            Log.d("SCANNER_3D", "Snapped to Point: $localPos")
+                            Log.d("SCANNER_3D", "Snapped to Point (Screen Space): $localPos")
                             val marker = SphereNode(engine, radius = 0.012f).apply {
                                 this.position = localPos
                                 materialInstance = materialLoader.createColorInstance(Color.Magenta)
                             }
                             markerNodes.add(marker)
                         } else {
-                            Log.w("SCANNER_3D", "No point found near ray tap")
+                            Log.w("SCANNER_3D", "No point found within 150px of tap")
                         }
                     }
                 }
@@ -622,37 +625,40 @@ fun PointCloudViewer(
 }
 
 private fun findNearestPointIn3DCloud(
-    ray: Ray,
+    tapX: Float,
+    tapY: Float,
     points: List<Float3>,
-    centroid: Position
+    centroid: Position,
+    cameraNode: CameraNode
 ): Position? {
     var minDistance = Float.MAX_VALUE
-    var bestLocalPoint: Float3? = null
-    val snapThreshold = 0.15f // 15cm
-
-    val rayOrigin = Float3(ray.origin.x, ray.origin.y, ray.origin.z)
-    val rayDirection = Float3(ray.direction.x, ray.direction.y, ray.direction.z)
+    var bestLocalPoint: Position? = null
+    val snapThreshold = 150f // 150 pixel tap radius
 
     for (p in points) {
         // Correct for the centroid offset used in rendering
-        val localP = Float3(p.x - centroid.x, p.y - centroid.y, p.z - centroid.z)
+        val localP = Position(p.x - centroid.x, p.y - centroid.y, p.z - centroid.z)
         
-        val v = localP - rayOrigin
-        val projLength = dot(v, rayDirection)
+        // Project the 3D world/local point into 2D screen coordinates
+        // worldToScreenPoint expects Vector3, so we convert localP (Float3/Position)
+        val screenPoint = cameraNode.worldToScreenPoint(Vector3(localP.x, localP.y, localP.z))
         
-        // Only consider points IN FRONT of the camera
-        if (projLength > 0f) {
-            val projection = rayOrigin + rayDirection * projLength
-            val distToRay = length(localP - projection)
+        // Skip points that are behind the camera (returns NaN)
+        if (screenPoint.x.isNaN()) continue
+        
+        // Calculate 2D pixel distance between tap and projected point
+        val dx = tapX - screenPoint.x
+        val dy = tapY - screenPoint.y
+        val dist = sqrt(dx * dx + dy * dy)
 
-            if (distToRay < snapThreshold && distToRay < minDistance) {
-                minDistance = distToRay
-                bestLocalPoint = localP
-            }
+        // Snapping logic: find the absolute closest point within the threshold
+        if (dist < snapThreshold && dist < minDistance) {
+            minDistance = dist
+            bestLocalPoint = localP
         }
     }
     
-    return bestLocalPoint?.let { Position(it.x, it.y, it.z) }
+    return bestLocalPoint
 }
 
 private fun findNearestPointCloudPoint(
