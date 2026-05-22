@@ -74,6 +74,8 @@ import dev.romainguy.kotlin.math.cross
 import dev.romainguy.kotlin.math.length
 import io.github.sceneview.rememberOnGestureListener
 import androidx.compose.ui.unit.Dp
+import androidx.lifecycle.ViewModel
+import com.example.neveranother.viewmodels.NAviewmodel
 import com.google.android.filament.LightManager
 import io.github.sceneview.node.LightNode
 import io.github.sceneview.math.Rotation
@@ -86,11 +88,16 @@ private enum class ScannerState {
 }
 
 @Composable
-fun TorsoScannerV2() {
-    val TARGET_POINT_COUNT = 1500
-    val DEPTH_CUTOFF_METERS = 1.25f // Max scanning distance
-    val VOXEL_SIZE = 0.015f // Node spacing (cm threshold for deduplication)
-    val SPHERE_RADIUS = 0.0075f // Sphere radius (mm diameter)
+fun TorsoScannerV2(
+    naViewModel: NAviewmodel
+) {
+    // variabler til at justere egenskaber. Til at fine-tune resultater
+    val TARGET_POINT_COUNT = 1500 // Antallet af punkter der skal findes før den færdiggøre scan.
+    val DEPTH_CUTOFF_METERS = 1.25f // Noder efter denne afstand fra kameraet skal ignoreres, undgår bacgrundstracking noder
+    val VOXEL_SIZE = 0.015f // Node afstand for at undgå at mange noder placers på samme punkt (0.015f = 1.5 cm afstand)
+    val SPHERE_RADIUS = 0.0075f // Radius på noder i 3D vieweren (0.0075f = 0.75cm diameter)
+
+
     
     val engine = rememberEngine()
     val cameraNode = rememberARCameraNode(engine = engine)
@@ -358,9 +365,7 @@ fun TorsoScannerV2() {
                 points = capturedPointCloud.toList(), // Pass stable snapshot
                 markerNodes = markerNodes,
                 sphereRadius = SPHERE_RADIUS,
-                onMarkerPlaced = { _ ->
-                    // No action needed here as PointCloudViewer now handles adding to its parentNode
-                }
+                naViewModel
             )
         }
 
@@ -521,7 +526,7 @@ fun PointCloudViewer(
     points: List<Float3>,
     markerNodes: MutableList<Node>,
     sphereRadius: Float,
-    onMarkerPlaced: (Position) -> Unit = {}
+    naViewModel: NAviewmodel
 ) {
     val materialLoader = io.github.sceneview.rememberMaterialLoader(engine)
 
@@ -668,6 +673,10 @@ fun PointCloudViewer(
             // Lower Circ: Right Underbust(6), Left Underbust(2), Center Underbust(7), null
             val lowerCirc = calculateEllipseCircumference(nodes[6], nodes[2], nodes[7], null)
 
+            // TODO naViewModel measurements og save
+
+            // TODO navigate to result screen
+
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -696,33 +705,6 @@ private fun ResultRow(label: String, value: Float) {
         Text(text = "${"%.1f".format(value)} cm", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = NohemiFontFamily)
     }
 }
-
-private fun calculateEllipseCircumference(
-    pOuter1: Position, 
-    pOuter2: Position, 
-    pFront1: Position, 
-    pFront2: Position? = null
-): Float {
-    // semi-major axis a: 3D distance between pOuter1 and pOuter2 / 2
-    val a = sqrt(
-        (pOuter2.x - pOuter1.x).pow(2) +
-        (pOuter2.y - pOuter1.y).pow(2) +
-        (pOuter2.z - pOuter1.z).pow(2)
-    ) / 2f
-
-    // semi-minor axis b: absolute difference between outer Z average and front Z average
-    val avgZOuter = (pOuter1.z + pOuter2.z) / 2f
-    val avgZFront = if (pFront2 == null) pFront1.z else (pFront1.z + pFront2.z) / 2f
-    val b = abs(avgZOuter - avgZFront)
-
-    // Ramanujan formula: PI * (3*(a+b) - sqrt((3*a+b)*(a+3*b)))
-    val term1 = 3f * (a + b)
-    val term2 = sqrt((3f * a + b) * (a + 3f * b))
-    val circumferenceMeters = Math.PI.toFloat() * (term1 - term2)
-    
-    return circumferenceMeters * 100f
-}
-
 
 
 private fun findNearestPointIn3DCloud(
@@ -835,10 +817,42 @@ private fun captureARBitmap(view: ARSceneView, onBitmapCaptured: (Bitmap?) -> Un
     }, Handler(Looper.getMainLooper()))
 }
 
-/* [DELETE] performFakeHitTest */
 
+
+//
+// Funktioner til at lave målinger ud fra de 9 punkter
+//
+
+// Til bryst højde og brystbredde, finder afstand mellem punkter, og udregner derefter en curve mellem 3 punkter fora t simulere målebåndet
 private fun calculateDistanceInCm(p1: Position, p2: Position): Float = sqrt((p2.x - p1.x).pow(2) + (p2.y - p1.y).pow(2) + (p2.z - p1.z).pow(2)) * 100f
 private fun calculateSurfaceDistance(s: Position, a: Position, e: Position): Float = calculateDistanceInCm(s, a) + calculateDistanceInCm(a, e)
+
+// Til øvre og under omkreds, ved at kende den halve torso kan vi bruge Ramanujan formel til at udregne resten af omkredsen
+private fun calculateEllipseCircumference(
+    pOuter1: Position,
+    pOuter2: Position,
+    pFront1: Position,
+    pFront2: Position? = null
+): Float {
+    // semi-major axis a: 3D distance between pOuter1 and pOuter2 / 2
+    val a = sqrt(
+        (pOuter2.x - pOuter1.x).pow(2) +
+                (pOuter2.y - pOuter1.y).pow(2) +
+                (pOuter2.z - pOuter1.z).pow(2)
+    ) / 2f
+
+    // semi-minor axis b: absolute difference between outer Z average and front Z average
+    val avgZOuter = (pOuter1.z + pOuter2.z) / 2f
+    val avgZFront = if (pFront2 == null) pFront1.z else (pFront1.z + pFront2.z) / 2f
+    val b = abs(avgZOuter - avgZFront)
+
+    // Ramanujan formula: PI * (3*(a+b) - sqrt((3*a+b)*(a+3*b)))
+    val term1 = 3f * (a + b)
+    val term2 = sqrt((3f * a + b) * (a + 3f * b))
+    val circumferenceMeters = Math.PI.toFloat() * (term1 - term2)
+
+    return circumferenceMeters * 100f
+}
 
 @Composable
 private fun StatusTag(text: String, color: Color) {

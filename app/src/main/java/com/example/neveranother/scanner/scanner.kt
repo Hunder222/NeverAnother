@@ -26,13 +26,17 @@ import androidx.compose.ui.unit.sp
 //import com.example.neveranother.scanner.components.TorsoScannerV1
 import com.example.neveranother.scanner.components.TorsoScannerV2
 import com.example.neveranother.ui.theme.NohemiFontFamily
-
+import com.example.neveranother.viewmodels.NAviewmodel
 
 
 @Composable
-fun Scanner() {
+fun Scanner(
+    NAviewmodel: NAviewmodel
+) {
     Box(modifier = Modifier.fillMaxSize()) {
-        TorsoScannerV2()
+        TorsoScannerV2(
+            NAviewmodel
+        )
 
         Text(
             fontFamily = NohemiFontFamily,
@@ -50,3 +54,4 @@ fun Scanner() {
         )
     }
 }
+
