@@ -1,5 +1,9 @@
 package com.example.neveranother.scanner
 
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +30,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import com.example.neveranother.components.NABodyText
 import com.example.neveranother.components.NAHeader2
 import com.example.neveranother.ui.theme.NAaccentColor
@@ -40,17 +48,39 @@ fun Scanner(
 ) {
     var isScanning by remember { mutableStateOf(false) }
     var scanProgress by remember { mutableStateOf(0f) }
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Camera Preview Placeholder
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Camera Preview", color = Color.White)
-        }
+        // Real Camera Preview
+        AndroidView(
+            factory = { ctx ->
+                val previewView = PreviewView(ctx)
+                val executor = ContextCompat.getMainExecutor(ctx)
+                cameraProviderFuture.addListener({
+                    val cameraProvider = cameraProviderFuture.get()
+                    val preview = Preview.Builder().build().also {
+                        it.setSurfaceProvider(previewView.surfaceProvider)
+                    }
+
+                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+                    try {
+                        cameraProvider.unbindAll()
+                        cameraProvider.bindToLifecycle(
+                            lifecycleOwner,
+                            cameraSelector,
+                            preview
+                        )
+                    } catch (e: Exception) {
+                        // Handle errors
+                    }
+                }, executor)
+                previewView
+            },
+            modifier = Modifier.fillMaxSize()
+        )
 
         // Overlay UI
         Column(
