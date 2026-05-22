@@ -19,11 +19,11 @@ import com.example.neveranother.manual.LowerCircumference
 import com.example.neveranother.manual.Manual
 import com.example.neveranother.productpage.Productpage
 import com.example.neveranother.scanner.Scanner
-import com.example.neveranother.viewmodels.NAviewmodel
+import com.example.neveranother.viewmodels.NAViewModel
 
 @Composable
 fun Navigatior(
-    NAviewmodel: NAviewmodel,
+    naViewModel: NAViewModel,
 ) {
     val navController = rememberNavController()
 
@@ -61,51 +61,51 @@ fun Navigatior(
             Productpage()
         }
         composable("choosemeasurement"){
-            Choosemeasurement(NAviewmodel,
+            Choosemeasurement(naViewModel,
                 {navController.navigate("manual")},
                 {navController.navigate("scanner")})
         }
         composable("manual"){
             Manual(
-                viewModel = NAviewmodel,
+                viewModel = naViewModel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("lowercircumference") }
             )
         }
         composable("lowercircumference"){
             LowerCircumference(
-                viewModel = NAviewmodel,
+                viewModel = naViewModel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("chestvolume") }
             )
         }
         composable("chestvolume"){
             ChestVolume(
-                viewModel = NAviewmodel,
+                viewModel = naViewModel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("chestwidth") }
             )
         }
         composable("chestwidth"){
             ChestWidth(
-                viewModel = NAviewmodel,
+                viewModel = naViewModel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("chestheight") }
             )
         }
         composable("chestheight"){
             ChestHeight(
-                viewModel = NAviewmodel,
+                viewModel = naViewModel,
                 onBack = { navController.popBackStack() },
                 onNext = { navController.navigate("results") }
             )
         }
         composable("results") {
             Results(
-                NAviewmodel = NAviewmodel,
+                naViewModel = naViewModel,
                 onBack = { navController.popBackStack() },
                 onGoToCart = {
-                    NAviewmodel.saveCurrentMeasurements()
+                    naViewModel.saveCurrentMeasurements()
                     navController.navigate("cart")
                 }
             )
@@ -121,7 +121,7 @@ fun Navigatior(
         }
         composable("history"){
             History(
-                viewModel = NAviewmodel,
+                viewModel = naViewModel,
                 onBack = { navController.popBackStack() }
             )
         }

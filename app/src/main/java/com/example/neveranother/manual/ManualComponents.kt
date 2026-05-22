@@ -1,5 +1,7 @@
 package com.example.neveranother.manual
 
+import android.net.Uri
+import androidx.annotation.OptIn
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -10,17 +12,28 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.AspectRatioFrameLayout
+import androidx.media3.ui.PlayerView
 import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAtextBlack
 import com.example.neveranother.ui.theme.NAwarmGrey
@@ -191,5 +204,35 @@ fun ManualNavigationButtons(
         ) {
             Text("Fortsæt", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
+    }
+}
+
+@OptIn(UnstableApi::class)
+@Composable
+fun VideoPlayer(videoResId: Int, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            val uri = Uri.parse("android.resource://${context.packageName}/$videoResId")
+            setMediaItem(MediaItem.fromUri(uri))
+            repeatMode = Player.REPEAT_MODE_ALL
+            playWhenReady = true
+            prepare()
+        }
+    }
+
+    DisposableEffect(
+        AndroidView(
+            factory = {
+                PlayerView(context).apply {
+                    player = exoPlayer
+                    useController = false
+                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+                }
+            },
+            modifier = modifier
+        )
+    ) {
+        onDispose { exoPlayer.release() }
     }
 }

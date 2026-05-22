@@ -1,5 +1,6 @@
 package com.example.neveranother.manual
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,18 +14,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.neveranother.R
 import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAtextBlack
 import com.example.neveranother.ui.theme.NAwarmGrey
 import com.example.neveranother.ui.theme.NohemiFontFamily
-import com.example.neveranother.viewmodels.NAviewmodel
+import com.example.neveranother.viewmodels.NAViewModel
 
 @Composable
 fun ChestVolume(
-    viewModel: NAviewmodel,
+    viewModel: NAViewModel,
     onBack: () -> Unit = {},
     onNext: () -> Unit = {}
 ) {
@@ -86,6 +90,13 @@ fun ChestVolume(
             // Options
             options.forEach { option ->
                 val isSelected = viewModel.chestVolume == option
+                val imageRes = when (option) {
+                    "Firmer Top Volume" -> R.drawable.firmer_top_volumen
+                    "Softer Top Volume" -> R.drawable.softer_top_volumen
+                    "Firmer Bottom Volume" -> R.drawable.firmer_bottom_volumen
+                    "Softer Bottom Volume" -> R.drawable.softer_bottom_volumen
+                    else -> R.drawable.threed
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -106,15 +117,14 @@ fun ChestVolume(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        // Placeholder for Image
-                        Box(
+                        Image(
+                            painter = painterResource(id = imageRes),
+                            contentDescription = option,
                             modifier = Modifier
                                 .size(80.dp)
-                                .background(Color.White.copy(alpha = 0.5f), RoundedCornerShape(8.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("Billede", fontSize = 10.sp, color = NAtextBlack.copy(alpha = 0.4f))
-                        }
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
 
                         Spacer(modifier = Modifier.width(20.dp))
 

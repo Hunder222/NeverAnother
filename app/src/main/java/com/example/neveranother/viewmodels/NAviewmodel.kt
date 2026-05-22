@@ -18,7 +18,7 @@ data class Measurement(
     val date: String = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
 )
 
-class NAviewmodel: ViewModel() {
+class NAViewModel: ViewModel() {
     val userName = "Anette"
 
     // Measurements

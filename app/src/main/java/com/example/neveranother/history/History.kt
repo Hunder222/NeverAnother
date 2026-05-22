@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.neveranother.ui.theme.*
 import com.example.neveranother.viewmodels.Measurement
-import com.example.neveranother.viewmodels.NAviewmodel
+import com.example.neveranother.viewmodels.NAViewModel
 
 @Composable
 fun History(
-    viewModel: NAviewmodel,
+    viewModel: NAViewModel,
     onBack: () -> Unit
 ) {
     Column(
