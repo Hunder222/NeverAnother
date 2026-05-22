@@ -10,9 +10,12 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -84,10 +87,10 @@ private enum class ScannerState {
 
 @Composable
 fun TorsoScannerV2() {
-    val TARGET_POINT_COUNT = 1000
-    val DEPTH_CUTOFF_METERS = 1.5f // EDIT THIS to change the max scanning distance
-    val VOXEL_SIZE = 0.015f // Node spacing (1.5 cm threshold for deduplication)
-    val SPHERE_RADIUS = 0.0075f // Sphere radius (0.015f diameter)
+    val TARGET_POINT_COUNT = 1500
+    val DEPTH_CUTOFF_METERS = 1.25f // Max scanning distance
+    val VOXEL_SIZE = 0.015f // Node spacing (cm threshold for deduplication)
+    val SPHERE_RADIUS = 0.0075f // Sphere radius (mm diameter)
     
     val engine = rememberEngine()
     val cameraNode = rememberARCameraNode(engine = engine)
@@ -521,7 +524,19 @@ fun PointCloudViewer(
     onMarkerPlaced: (Position) -> Unit = {}
 ) {
     val materialLoader = io.github.sceneview.rememberMaterialLoader(engine)
-    
+
+    val instructionSteps = listOf(
+        "1/9: Tap Top Strap (A)",
+        "2/9: Tap Left Apex (B)",
+        "3/9: Tap Left Underbust (C)",
+        "4/9: Tap Left Outer Breast (D)",
+        "5/9: Tap Center Gore (E)",
+        "6/9: Tap Right Outer Breast (F)",
+        "7/9: Tap Right Underbust (G)",
+        "8/9: Tap Center Underbust (H)",
+        "9/9: Tap Right Apex (I)"
+    )
+
     // Calculate Centroid for orbiting with NaN protection
     val centroid = remember(points) {
         if (points.isEmpty()) Position(0f, 0f, 0f)
@@ -590,7 +605,7 @@ fun PointCloudViewer(
                 onSingleTapConfirmed = { motionEvent, _ ->
                     Log.d("SCANNER_3D", "Tap detected at: ${motionEvent.x}, ${motionEvent.y}")
 
-                    if (markerNodes.size < 3) {
+                    if (markerNodes.size < 9) {
                         // Perform 2D Screen-Space Snapping
                         val localPos = findNearestPointIn3DCloud(
                             tapX = motionEvent.x,
@@ -618,11 +633,97 @@ fun PointCloudViewer(
             // Add everything to root scene to rule out parentNode issues
             childNodes = listOf(parentNode, mainLightNode, cameraLightNode) + markerNodes
         )
+
+        // Instruction Overlay
+        if (markerNodes.size < 9) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 40.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                StatusTag(
+                    text = instructionSteps[markerNodes.size],
+                    color = Color.Cyan
+                )
+            }
+        }
         
         // Count diagnostic
         Text(text = "Points in 3D: ${points.size}", color = Color.White, modifier = Modifier.align(Alignment.TopEnd).padding(16.dp))
+
+        // Results Column
+        if (markerNodes.size == 9) {
+            val nodes = markerNodes.map { it.position }
+            
+            // Breast Height: Strap(0), Left Apex(1), Left Underbust(2)
+            val breastHeight = calculateSurfaceDistance(nodes[0], nodes[1], nodes[2])
+            
+            // Breast Span: Left Outer(3), Left Apex(1), Center Gore(4)
+            val breastSpan = calculateSurfaceDistance(nodes[3], nodes[1], nodes[4])
+            
+            // Upper Circ: Right Outer(5), Left Outer(3), Right Apex(8), Left Apex(1)
+            val upperCirc = calculateEllipseCircumference(nodes[5], nodes[3], nodes[8], nodes[1])
+            
+            // Lower Circ: Right Underbust(6), Left Underbust(2), Center Underbust(7), null
+            val lowerCirc = calculateEllipseCircumference(nodes[6], nodes[2], nodes[7], null)
+
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(start = 24.dp, bottom = 180.dp)
+                    .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(12.dp))
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(text = "MEASUREMENTS COMPLETE", color = Color.Green, fontSize = 12.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                ResultRow("Breast Height", breastHeight)
+                ResultRow("Breast Span", breastSpan)
+                ResultRow("Upper Circ", upperCirc)
+                ResultRow("Lower Circ", lowerCirc)
+            }
+        }
     }
 }
+
+@Composable
+private fun ResultRow(label: String, value: Float) {
+    Row(
+        modifier = Modifier.fillMaxWidth(0.6f),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = "$label:", color = Color.Gray, fontSize = 14.sp, fontFamily = NohemiFontFamily)
+        Text(text = "${"%.1f".format(value)} cm", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = NohemiFontFamily)
+    }
+}
+
+private fun calculateEllipseCircumference(
+    pOuter1: Position, 
+    pOuter2: Position, 
+    pFront1: Position, 
+    pFront2: Position? = null
+): Float {
+    // semi-major axis a: 3D distance between pOuter1 and pOuter2 / 2
+    val a = sqrt(
+        (pOuter2.x - pOuter1.x).pow(2) +
+        (pOuter2.y - pOuter1.y).pow(2) +
+        (pOuter2.z - pOuter1.z).pow(2)
+    ) / 2f
+
+    // semi-minor axis b: absolute difference between outer Z average and front Z average
+    val avgZOuter = (pOuter1.z + pOuter2.z) / 2f
+    val avgZFront = if (pFront2 == null) pFront1.z else (pFront1.z + pFront2.z) / 2f
+    val b = abs(avgZOuter - avgZFront)
+
+    // Ramanujan formula: PI * (3*(a+b) - sqrt((3*a+b)*(a+3*b)))
+    val term1 = 3f * (a + b)
+    val term2 = sqrt((3f * a + b) * (a + 3f * b))
+    val circumferenceMeters = Math.PI.toFloat() * (term1 - term2)
+    
+    return circumferenceMeters * 100f
+}
+
+
 
 private fun findNearestPointIn3DCloud(
     tapX: Float,
