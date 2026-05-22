@@ -86,7 +86,9 @@ fun Navbar() {
 }
 
 @Composable
-fun Frontpage() {
+fun Frontpage(
+    onGoToProductpage: () -> Unit
+) {
 
     // Scaffold to make sure the Navbar is on top of other content.
     Scaffold(
@@ -122,9 +124,7 @@ fun Frontpage() {
                 )
 
                 Button(
-                    onClick = {
-                        // Do something
-                    },
+                    onClick = onGoToProductpage,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = NAaccentColor
                     ),
