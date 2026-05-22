@@ -38,7 +38,9 @@ fun Navigatior(
             )
         }
         composable("frontpage") {
-            Frontpage()
+            Frontpage(
+                { navController.navigate("productpage") }
+            )
         }
         composable("productpage"){
             Productpage()
