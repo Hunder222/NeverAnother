@@ -24,11 +24,11 @@ import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAtextBlack
 import com.example.neveranother.ui.theme.NAwarmGrey
 import com.example.neveranother.ui.theme.NohemiFontFamily
-import com.example.neveranother.viewmodels.NAviewmodel
+import com.example.neveranother.viewmodels.NAViewModel
 
 @Composable
 fun ChestVolume(
-    viewModel: NAviewmodel,
+    viewModel: NAViewModel,
     onBack: () -> Unit = {},
     onNext: () -> Unit = {}
 ) {

@@ -45,12 +45,12 @@ class MainActivity : ComponentActivity() {
                     color = NAbackgroundColor
                 ) {
                     // init our never another viewmodel
-                    val naViewModel: NAViewModel = viewModel()
+                    val NAviewModel: NAViewModel = viewModel()
                     Column(
                         // padding on app, so within status bar and android navigation bar
                         modifier = Modifier.systemBarsPadding()
                     ) {
-                        Navigatior(naViewModel)
+                        Navigatior(NAviewModel)
                     }
                 }
             }
