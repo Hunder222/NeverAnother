@@ -1,6 +1,8 @@
 package com.example.neveranother.choosemeassurement
 
+import android.R.attr.clickable
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +34,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.neveranother.ui.theme.NohemiFontFamily
@@ -113,7 +119,7 @@ fun Choosemeasurement(
             infoTextManualDanish
         )
 
-        ReminderButton ({},firstTextReminderBtnDanish,secondTextReminderBtnDanish)
+        ReminderButtonAndBar ({},firstTextReminderBtnDanish,secondTextReminderBtnDanish)
     }
 }
 @Composable
@@ -232,15 +238,19 @@ fun InfoCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class) // this is an experimental way of making this that google has not locked in yet, so it could change
 @Composable
-fun ReminderButton(
+fun ReminderButtonAndBar(
     onClick: () -> Unit,
     firstTextReminderBtn: String,
     secondTextReminderBtn: String
 ) {
 
+    var showSheet by remember { mutableStateOf(false) } // rembers whether bottomsheet should be shown
+    val sheetState = rememberModalBottomSheetState()
+
     Button(
-        onClick = onClick,
+        onClick = { showSheet = true }, // click to open bottomsheet that has reminders
         shape = RoundedCornerShape(15.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB58A)),
         modifier = Modifier
@@ -265,6 +275,42 @@ fun ReminderButton(
                 color = Color.White
             )
 
+        }
+    }
+    if (showSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showSheet = false }, // lambdafunction that is called when the user clicks outside the sheet or slides it away
+            sheetState = sheetState,
+            containerColor = Color.White
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 50.dp, start = 20.dp, end = 20.dp)
+            ) {
+                Text(
+                    "Påmind mig om:",
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(vertical = 10.dp)
+                )
+
+                listOf("Om 1 time", "Om 3 timer", "I morgen", "Om en uge").forEach { option -> // buttons can be changed here because the only difference is what it says in this version where the notifications will not be given
+                    Button(
+                        onClick = {
+                            // gem påmindelse
+                            showSheet = false
+                        },
+                        shape = RoundedCornerShape(15.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB58A)),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                    ) {
+                        Text(option, fontSize = 18.sp, color = Color.White)
+                    }
+                }
+            }
         }
     }
 }
