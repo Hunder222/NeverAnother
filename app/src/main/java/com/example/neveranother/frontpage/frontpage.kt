@@ -36,6 +36,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import com.example.neveranother.productpage.ProductInfo
 
 val nohemiBlack = FontFamily(
     Font(R.font.nohemi_black)
@@ -84,7 +86,9 @@ fun Navbar() {
 }
 
 @Composable
-fun Frontpage() {
+fun Frontpage(
+    onGoToProductpage: () -> Unit
+) {
 
     // Scaffold to make sure the Navbar is on top of other content.
     Scaffold(
@@ -120,9 +124,7 @@ fun Frontpage() {
                 )
 
                 Button(
-                    onClick = {
-                        // Do something
-                    },
+                    onClick = onGoToProductpage,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = NAaccentColor
                     ),
@@ -293,13 +295,41 @@ fun Frontpage() {
                 //Horisontal Row ending here
             }
 
-            Text(
-                text = "Pasformsgaranti - test",
-                fontFamily = nohemiBlack,
-                fontSize = 26.sp,
-                modifier = Modifier.padding(top = 70.dp, start = 15.dp)
-            )
 
+            Box (modifier = Modifier.padding(top = 40.dp)){
+                Image(
+                    painter = painterResource(id = R.drawable.bh_forsidebillede4),
+                    contentDescription = "Frontpage image 4",
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth
+                )
+
+                Text(
+                    text = "Pasformsgaranti",
+                    fontFamily = nohemiBlack,
+                    fontSize = 26.sp,
+                    modifier = Modifier.padding(top = 345.dp, start = 15.dp),
+                    color = Color.White
+                )
+
+            }
+
+
+
+
+            Column(
+                modifier = Modifier
+                    .padding(start = 0.dp, top = 30.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+            ProductInfo(
+                R.drawable.check_mark,
+                "Størrelsesgaranti",
+                "Vi ønsker, at du skal elske din BH. Er pasformen ikke perfekt, så tilbyder vi en gratis størrelsesgaranti!"
+            )
+            }
+/*
             Column(
                 modifier = Modifier
                     .padding(15.dp)
@@ -312,15 +342,15 @@ fun Frontpage() {
                     .height(300.dp)
             ) {}
 
+
+ */
             Button(
-                onClick = {
-                    // Do something
-                },
+                onClick = onGoToProductpage,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = NAaccentColor
                 ),
                 modifier = Modifier
-                    .padding(top = 0.dp, start = 15.dp, end = 15.dp)
+                    .padding(top = 10.dp, start = 15.dp, end = 15.dp)
                     .fillMaxWidth()
                     .shadow(
                         elevation = 3.dp,
@@ -338,7 +368,7 @@ fun Frontpage() {
             Column(
                 modifier = Modifier
                     .padding(top = 10.dp)
-                    .background(color = Color.Red.copy(alpha = 0.5f))
+                    .background(color = warmGrey)
                     .fillMaxWidth()
             ) {
 
@@ -347,7 +377,7 @@ fun Frontpage() {
                     contentDescription = "Nav bar logo",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 15.dp, end = 15.dp))
+                        .padding(start = 15.dp, end = 15.dp, top = 40.dp))
 
                 Text (
                     text = "Kontakt",
@@ -368,9 +398,11 @@ fun Frontpage() {
         }
     }
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun FrontpagePreview() {
     Frontpage()
 }
+
+ */
