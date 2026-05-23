@@ -21,20 +21,18 @@ import com.example.neveranother.components.NAMicroCopy
 import com.example.neveranother.ui.theme.Inter
 import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAbackgroundColor
-import com.example.neveranother.ui.theme.NohemiFontFamily
-import com.example.neveranother.viewmodels.NAviewmodel
 
 // This is a temporary view, used for development navigation, as proper navigation is not implemented yet
 @Composable
 fun Temppage(
-    NAviewmodel: NAviewmodel,
     goToFrontpage: () -> Unit,
     goToProductpage: () -> Unit,
     goToChoosemeasurement: () -> Unit,
     goToManual: () -> Unit,
     goToScanner: () -> Unit,
     goToCart: () -> Unit,
-){
+    goToHistory: () -> Unit,
+) {
     // container for buttons, centered on the screen
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -42,10 +40,10 @@ fun Temppage(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // examples of text components for devs
-        NAHeader1("Nohemi Header 1")
-        NAHeader2("Nohemi Header 2")
-        NABodyText("Inter Body Text")
-        NAMicroCopy("Inter Micro copy text")
+        NAHeader1("Header1 (NAHeader1)")
+        NAHeader2("Header 2 (NAHeader2)")
+        NABodyText("Body Text (NABodyText)")
+        NAMicroCopy("Micro copy (NAMicroCopy)")
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -95,6 +93,12 @@ fun Temppage(
             onClick = goToCart
         ){
             Text("Cart")
+        }
+
+        Button(
+            onClick = goToHistory
+        ){
+            Text("Målehistorik")
         }
     }
 }
