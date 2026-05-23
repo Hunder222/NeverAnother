@@ -38,13 +38,13 @@ var bodyText1 = "Brug bagkameraet på din telefon til at scanne øvre torso. \n"
         "Klik start scan og stå helt stille, panorér telefonen fra den ene til den anden side.\n" +
         "Sørg for også at scanne siderne af kroppen."
 var microCopy1 = "Alt data om kropscanning slettes efterfølgende, og bliver behandlet på telefonen."
-var buttonText1 = "Start Scanning"
+var buttonText1 = "Næste"
 
 
-@Preview
+
 @Composable
 fun HowToScan(
-    onStartScanClick: () -> Unit = {}
+    onNextClick: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -81,7 +81,7 @@ fun HowToScan(
         NAMicroCopy(microCopy1)
 
         Button(
-            onClick = onStartScanClick,
+            onClick = onNextClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 20.dp),

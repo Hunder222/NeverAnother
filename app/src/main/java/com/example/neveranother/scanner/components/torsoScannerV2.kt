@@ -13,9 +13,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,7 +44,6 @@ import com.google.ar.core.InstantPlacementPoint
 import com.google.ar.core.Plane
 import com.google.ar.core.Point
 import com.google.ar.core.Pose
-import com.google.ar.core.TrackingState
 import io.github.sceneview.ar.ARScene
 import io.github.sceneview.ar.ARSceneView
 import io.github.sceneview.ar.rememberARCameraNode
@@ -55,7 +52,6 @@ import io.github.sceneview.node.Node
 import io.github.sceneview.node.SphereNode
 import io.github.sceneview.rememberEngine
 import io.github.sceneview.rememberOnGestureListener
-import kotlinx.coroutines.delay
 import kotlin.math.pow
 import kotlin.math.sqrt
 import kotlin.math.abs
@@ -63,23 +59,17 @@ import dev.romainguy.kotlin.math.Float3
 import dev.romainguy.kotlin.math.dot
 import dev.romainguy.kotlin.math.normalize
 import io.github.sceneview.Scene
-import io.github.sceneview.collision.Ray
 import io.github.sceneview.collision.Vector3
 import io.github.sceneview.rememberCameraNode
 import io.github.sceneview.rememberCameraManipulator
 import io.github.sceneview.node.CameraNode
-import com.google.android.filament.utils.Manipulator
 import com.google.android.filament.Engine
-import dev.romainguy.kotlin.math.cross
 import dev.romainguy.kotlin.math.length
-import io.github.sceneview.rememberOnGestureListener
-import androidx.compose.ui.unit.Dp
-import androidx.lifecycle.ViewModel
-import com.example.neveranother.viewmodels.NAviewmodel
+import androidx.compose.ui.unit.TextUnit
+import com.example.neveranother.viewmodels.NAViewModel
 import com.google.android.filament.LightManager
 import io.github.sceneview.node.LightNode
 import io.github.sceneview.math.Rotation
-import io.github.sceneview.node.CubeNode
 
 private enum class ScannerState {
     SCANNING,
@@ -87,9 +77,34 @@ private enum class ScannerState {
     VIEWING_3D
 }
 
+var statusTextFoundTorso = "Torso fundet"
+var statusTextFindTorso = "Peg på torso"
+var statusTextLockedOnto = "Låst på"
+var statusTextDistance = "Afstand"
+var statusTextProgress = "Fremskridt"
+var statusTextFreezeNow = "Frys nu"
+var statusTextHowToMeasure = "Rotér og klik for at måle"
+var statusTextClearMarkers = "Fjern Markør"
+var statusTextRestartScan = "Genstart Scan"
+var statusTextClearScanData = "Start forfra"
+var StatusTextAmountOf3DPoints = "Antal 3D punkter"
+
+val instructionSteps = listOf(
+    "1/9: Klik på toppen af BH stroppen",
+    "2/9: Klik midt på venstre bryst",
+    "3/9: Klik på venstre underbryst",
+    "4/9: Klik på ydersiden af venstre bryst",
+    "5/9: Klik midt mellem brysterne",
+    "6/9: Klik på ydersiden af højre bryst",
+    "7/9: Klik på højre underbryst",
+    "8/9: Klik på midten af underbrystet",
+    "9/9: Klik midt på højre bryst"
+)
+
 @Composable
 fun TorsoScannerV2(
-    naViewModel: NAviewmodel
+    naViewModel: NAViewModel,
+    onScanComplete: () -> Unit
 ) {
     // variabler til at justere egenskaber. Til at fine-tune resultater
     val TARGET_POINT_COUNT = 1500 // Antallet af punkter der skal findes før den færdiggøre scan.
@@ -122,7 +137,7 @@ fun TorsoScannerV2(
         }
     }
 
-    var surfaceType by remember { mutableStateOf("Scanning...") }
+    var surfaceType by remember { mutableStateOf("Scanner...") }
     var isObjectLocked by remember { mutableStateOf(false) }
     var scannerState by remember { mutableStateOf(ScannerState.SCANNING) }
     var frozenBitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -225,24 +240,6 @@ fun TorsoScannerV2(
                 cameraNode = cameraNode,
                 childNodes = markerNodes + cursorNode,
                 onViewCreated = { arSceneView = this },
-                onGestureListener = rememberOnGestureListener(
-                    onSingleTapConfirmed = { motionEvent, _ ->
-                        if (scannerState == ScannerState.SCANNING) {
-                            val hitResults = arFrame?.hitTest(motionEvent.x, motionEvent.y) ?: emptyList()
-                            val hitResult = findBestHit(hitResults)
-
-                            hitResult?.let { hit ->
-                                if (markerAnchors.size < 3) {
-                                    val anchor = hit.createAnchor()
-                                    markerAnchors.add(anchor)
-                                    markerNodes.add(SphereNode(engine, radius = 0.012f).apply {
-                                        position = Position(hit.hitPose.tx(), hit.hitPose.ty(), hit.hitPose.tz())
-                                    })
-                                }
-                            }
-                        }
-                    }
-                ),
                 sessionConfiguration = { session, config ->
                     config.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL_AND_VERTICAL
                     if (session.isDepthModeSupported(Config.DepthMode.AUTOMATIC)) {
@@ -365,7 +362,8 @@ fun TorsoScannerV2(
                 points = capturedPointCloud.toList(), // Pass stable snapshot
                 markerNodes = markerNodes,
                 sphereRadius = SPHERE_RADIUS,
-                naViewModel
+                naViewModel = naViewModel,
+                onScanComplete = onScanComplete,
             )
         }
 
@@ -417,50 +415,12 @@ fun TorsoScannerV2(
         }
 
         // Status
-        Column(modifier = Modifier.align(Alignment.TopStart).padding(top = 100.dp, start = 16.dp), verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)) {
+        Column(modifier = Modifier.align(Alignment.TopStart).padding(top = 100.dp, start = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             if (scannerState == ScannerState.SCANNING) {
-                StatusTag(text = if (isObjectLocked) "OBJECT LOCKED" else "AIM AT OBJECT", color = if (isObjectLocked) Color.Green else Color.Cyan)
-
-                StatusTag(
-                    text = "LOCKED: $surfaceType",
-                    color = if (cursorNode.isVisible) Color.Cyan else Color.Gray
-                )
-
-                if (cursorNode.isVisible) {
-                    val distMeters = sqrt(
-                        (cameraNode.position.x - cursorNode.position.x).pow(2) +
-                        (cameraNode.position.y - cursorNode.position.y).pow(2) +
-                        (cameraNode.position.z - cursorNode.position.z).pow(2)
-                    )
-                    StatusTag(
-                        text = "DEPTH: ${"%.1f".format(distMeters * 100)} cm",
-                        color = Color.White
-                    )
-                }
-
-                if (isObjectLocked) {
-                    StatusTag(text = "GATHERING DATA: ${capturedPointCloud.size} / $TARGET_POINT_COUNT", color = Color.Red)
-
-                    Button(
-                        onClick = { triggerFreeze() },
-                        modifier = Modifier.padding(top = 8.dp),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text("Freeze Now", fontSize = 12.sp)
-                    }
-                }
-            } else if (scannerState == ScannerState.FROZEN || scannerState == ScannerState.VIEWING_3D) {
-                StatusTag(text = "FROZEN - ROTATE & TAP TO MEASURE", color = Color.Cyan)
-            }
-        }
-
-        // Status
-        Column(modifier = Modifier.align(Alignment.TopStart).padding(top = 100.dp, start = 16.dp), verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)) {
-            if (scannerState == ScannerState.SCANNING) {
-                StatusTag(text = if (isObjectLocked) "OBJECT LOCKED" else "AIM AT OBJECT", color = if (isObjectLocked) Color.Green else Color.Cyan)
+                StatusTag(text = if (isObjectLocked) statusTextFoundTorso else statusTextFindTorso, color = if (isObjectLocked) Color.Green else Color.Cyan)
                 
                 StatusTag(
-                    text = "LOCKED: $surfaceType",
+                    text = "$statusTextLockedOnto : $surfaceType",
                     color = if (cursorNode.isVisible) Color.Cyan else Color.Gray
                 )
 
@@ -471,41 +431,35 @@ fun TorsoScannerV2(
                         (cameraNode.position.z - cursorNode.position.z).pow(2)
                     )
                     StatusTag(
-                        text = "DEPTH: ${"%.1f".format(distMeters * 100)} cm",
+                        text = "$statusTextDistance: ${"%.1f".format(distMeters * 100)} cm",
                         color = Color.White
                     )
                 }
 
                 if (isObjectLocked) {
-                    StatusTag(text = "GATHERING DATA: ${capturedPointCloud.size} / $TARGET_POINT_COUNT", color = Color.Red)
+                    StatusTag(text = "$statusTextProgress: ${capturedPointCloud.size} / $TARGET_POINT_COUNT", color = Color.Red)
+                }
 
+                if (capturedPointCloud.size > 100) {
                     Button(
                         onClick = { triggerFreeze() },
                         modifier = Modifier.padding(top = 8.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Freeze Now", fontSize = 12.sp)
+                        Text(statusTextFreezeNow, fontSize = 12.sp)
                     }
                 }
+
             } else if (scannerState == ScannerState.FROZEN || scannerState == ScannerState.VIEWING_3D) {
-                StatusTag(text = "FROZEN - ROTATE & TAP TO MEASURE", color = Color.Cyan)
+                StatusTag(text = statusTextHowToMeasure, color = Color.Cyan)
             }
-        }
-
-        if (markerNodes.size == 3) {
-            val dist = calculateSurfaceDistance(markerNodes[0].position, markerNodes[1].position, markerNodes[2].position)
-            Log.d("SCANNER_3D", "Calculating Distance: P0=${markerNodes[0].position}, P1=${markerNodes[1].position}, P2=${markerNodes[2].position} -> Result: $dist cm")
-
-            Text(text = "Measurement: ${"%.2f".format(dist)} cm",
-                color = Color.White, fontSize = 24.sp, fontFamily = NohemiFontFamily,
-                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 200.dp)) // Task: Moved up to avoid button overlap
         }
 
         if (markerNodes.isNotEmpty()) {
             Button(onClick = {
                 markerNodes.clear(); markerAnchors.clear(); marker2DPoints.clear(); markerDistances.clear()
             }, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 120.dp)) {
-                Text(text = "Clear Markers", fontFamily = NohemiFontFamily)
+                Text(text = statusTextClearMarkers, fontFamily = NohemiFontFamily)
             }
         }
 
@@ -515,7 +469,7 @@ fun TorsoScannerV2(
             if (scannerState == ScannerState.FROZEN || scannerState == ScannerState.VIEWING_3D) arSceneView?.session?.resume()
             scannerState = ScannerState.SCANNING
         }, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 60.dp)) {
-            Text(text = if (scannerState != ScannerState.SCANNING) "Restart Scan" else "Clear All", fontFamily = NohemiFontFamily)
+            Text(text = if (scannerState != ScannerState.SCANNING) statusTextRestartScan else statusTextClearScanData, fontFamily = NohemiFontFamily)
         }
     }
 }
@@ -526,21 +480,10 @@ fun PointCloudViewer(
     points: List<Float3>,
     markerNodes: MutableList<Node>,
     sphereRadius: Float,
-    naViewModel: NAviewmodel
+    naViewModel: NAViewModel,
+    onScanComplete: () -> Unit
 ) {
     val materialLoader = io.github.sceneview.rememberMaterialLoader(engine)
-
-    val instructionSteps = listOf(
-        "1/9: Tap Top Strap (A)",
-        "2/9: Tap Left Apex (B)",
-        "3/9: Tap Left Underbust (C)",
-        "4/9: Tap Left Outer Breast (D)",
-        "5/9: Tap Center Gore (E)",
-        "6/9: Tap Right Outer Breast (F)",
-        "7/9: Tap Right Underbust (G)",
-        "8/9: Tap Center Underbust (H)",
-        "9/9: Tap Right Apex (I)"
-    )
 
     // Calculate Centroid for orbiting with NaN protection
     val centroid = remember(points) {
@@ -644,67 +587,64 @@ fun PointCloudViewer(
             Column(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 40.dp),
+                    .padding(top = 65.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 StatusTag(
                     text = instructionSteps[markerNodes.size],
-                    color = Color.Cyan
+                    color = Color.Cyan,
+                    fontSize = 20.sp
                 )
             }
         }
-        
-        // Count diagnostic
-        Text(text = "Points in 3D: ${points.size}", color = Color.White, modifier = Modifier.align(Alignment.TopEnd).padding(16.dp))
 
-        // Results Column
+        // Count diagnostic
+        Text(text = "$StatusTextAmountOf3DPoints: ${points.size}", color = Color.White, modifier = Modifier.align(Alignment.TopEnd).padding(16.dp))
+
+        // Gem mål når der markeret 9 noder
         if (markerNodes.size == 9) {
             val nodes = markerNodes.map { it.position }
-            
-            // Breast Height: Strap(0), Left Apex(1), Left Underbust(2)
-            val breastHeight = calculateSurfaceDistance(nodes[0], nodes[1], nodes[2])
-            
-            // Breast Span: Left Outer(3), Left Apex(1), Center Gore(4)
-            val breastSpan = calculateSurfaceDistance(nodes[3], nodes[1], nodes[4])
-            
-            // Upper Circ: Right Outer(5), Left Outer(3), Right Apex(8), Left Apex(1)
-            val upperCirc = calculateEllipseCircumference(nodes[5], nodes[3], nodes[8], nodes[1])
-            
-            // Lower Circ: Right Underbust(6), Left Underbust(2), Center Underbust(7), null
-            val lowerCirc = calculateEllipseCircumference(nodes[6], nodes[2], nodes[7], null)
 
-            // TODO naViewModel measurements og save
-
-            // TODO navigate to result screen
-
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(start = 24.dp, bottom = 180.dp)
-                    .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(12.dp))
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(text = "MEASUREMENTS COMPLETE", color = Color.Green, fontSize = 12.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
-                ResultRow("Breast Height", breastHeight)
-                ResultRow("Breast Span", breastSpan)
-                ResultRow("Upper Circ", upperCirc)
-                ResultRow("Lower Circ", lowerCirc)
-            }
+            saveMeasurements(
+                naViewModel,
+                nodes,
+                onScanComplete
+            )
         }
     }
 }
 
-@Composable
-private fun ResultRow(label: String, value: Float) {
-    Row(
-        modifier = Modifier.fillMaxWidth(0.6f),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = "$label:", color = Color.Gray, fontSize = 14.sp, fontFamily = NohemiFontFamily)
-        Text(text = "${"%.1f".format(value)} cm", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold, fontFamily = NohemiFontFamily)
-    }
+// udregner mål og gemmer dem i viewmodel, hvor den derefter navigere til resultatskærm der viser målene
+private fun saveMeasurements(
+    naViewModel: NAViewModel,
+    nodes: List<Position>,
+    onScanComplete: () -> Unit
+){
+    // Breast Height: Strap(0), Left Apex(1), Left Underbust(2)
+    val breastHeight = calculateSurfaceDistance(nodes[0], nodes[1], nodes[2])
+
+    // Breast Span: Left Outer(3), Left Apex(1), Center Gore(4)
+    val breastSpan = calculateSurfaceDistance(nodes[3], nodes[1], nodes[4])
+
+    // Upper Circ: Right Outer(5), Left Outer(3), Right Apex(8), Left Apex(1)
+    val upperCirc = calculateEllipseCircumference(nodes[5], nodes[3], nodes[8], nodes[1])
+
+    // Lower Circ: Right Underbust(6), Left Underbust(2), Center Underbust(7), null
+    val lowerCirc = calculateEllipseCircumference(nodes[6], nodes[2], nodes[7], null)
+
+    // naViewModel measurements og save
+    naViewModel.chestHeight = breastHeight.toString()
+    naViewModel.chestWidth = breastSpan.toString()
+    naViewModel.upperCircumference = upperCirc.toString()
+    naViewModel.lowerCircumference = lowerCirc.toString()
+
+    naViewModel.saveCurrentMeasurements()
+
+    // naviger til resultatskærm
+    onScanComplete()
 }
+
+
 
 
 private fun findNearestPointIn3DCloud(
@@ -854,9 +794,10 @@ private fun calculateEllipseCircumference(
     return circumferenceMeters * 100f
 }
 
+// Composable til at lave status text under scanning
 @Composable
-private fun StatusTag(text: String, color: Color) {
+private fun StatusTag(text: String, color: Color, fontSize: TextUnit = 12.sp) {
     Box(modifier = Modifier.background(color.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp)).padding(horizontal = 8.dp, vertical = 4.dp)) {
-        Text(text = text, color = color, fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = NohemiFontFamily)
+        Text(text = text, color = color, fontSize = fontSize, fontWeight = FontWeight.Bold, fontFamily = NohemiFontFamily)
     }
 }

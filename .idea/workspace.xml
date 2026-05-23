@@ -16,10 +16,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="Eureka #4 - tap measuring in 3D view">
+    <list default="true" id="b2664c3b-229f-4ccb-be7b-a48f1929628a" name="Changes" comment="how to scan page">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/components/chestvolume3D.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/results.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/manual/results.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/navigator/navigatior.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/navigator/navigatior.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/components/howToScan.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/components/howToScan.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/components/torsoScannerV2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/components/torsoScannerV2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/scanner.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/neveranother/scanner/scanner.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +37,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=C:\Users\Hunte\.android\avd\Medium_Phone.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[PhysicalDevice::serial=RFGL10GRXTY]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -57,8 +65,8 @@
       <list>
         <option value="Kotlin Class" />
         <option value="resourceFile" />
-        <option value="valueResourceFile" />
         <option value="Kotlin File" />
+        <option value="valueResourceFile" />
       </list>
     </option>
   </component>
@@ -108,12 +116,14 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "3dscanner",
-    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "settings.editor.selected.configurable": "gitlive.settings"
+    "last_opened_file_path": "C:/Users/Hunte/AndroidStudioProjects/NeverAnother/app/src/main/java/com/example/neveranother/scanner/components"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Hunte\AndroidStudioProjects\NeverAnother\app\src\main\java\com\example\neveranother\scanner\components" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Hunte\AndroidStudioProjects\NeverAnother\app\src\main\res\font" />
     </key>
@@ -210,39 +220,7 @@
       <option name="project" value="LOCAL" />
       <updated>1779108068787</updated>
     </task>
-    <task id="LOCAL-00003" summary="Eureka #1 - breast curvature and marker tracking">
-      <option name="closed" value="true" />
-      <created>1779191393944</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1779191393944</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Eureka #2 - Freeze action">
-      <option name="closed" value="true" />
-      <created>1779357265473</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1779357265473</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Eureka #3 - 3D model view">
-      <option name="closed" value="true" />
-      <created>1779435104924</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1779435104924</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Eureka #4 - tap measuring in 3D view">
-      <option name="closed" value="true" />
-      <created>1779440721917</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1779440721917</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -259,11 +237,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init" />
     <MESSAGE value="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents" />
-    <MESSAGE value="Eureka #1 - breast curvature and marker tracking" />
-    <MESSAGE value="Eureka #2 - Freeze action" />
-    <MESSAGE value="Eureka #3 - 3D model view" />
-    <MESSAGE value="Eureka #4 - tap measuring in 3D view" />
-    <option name="LAST_COMMIT_MESSAGE" value="Eureka #4 - tap measuring in 3D view" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fundamental Architecture, viewmodel, navigation, colors, fonts, textcomponents" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">

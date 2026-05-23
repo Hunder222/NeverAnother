@@ -26,31 +26,18 @@ import androidx.compose.ui.unit.sp
 //import com.example.neveranother.scanner.components.TorsoScannerV1
 import com.example.neveranother.scanner.components.TorsoScannerV2
 import com.example.neveranother.ui.theme.NohemiFontFamily
-import com.example.neveranother.viewmodels.NAviewmodel
+import com.example.neveranother.viewmodels.NAViewModel
 
 
 @Composable
 fun Scanner(
-    NAviewmodel: NAviewmodel
+    NAviewmodel: NAViewModel,
+    onScanComplete: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         TorsoScannerV2(
-            NAviewmodel
-        )
-
-        Text(
-            fontFamily = NohemiFontFamily,
-            text = "AR Scanner",
-            fontSize = 24.sp,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 48.dp)
-                .background(
-                    Color.Black.copy(alpha = 0.4f),
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+            NAviewmodel,
+            onScanComplete
         )
     }
 }

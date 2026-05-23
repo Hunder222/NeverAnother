@@ -107,7 +107,7 @@ fun Results(
                 colors = ButtonDefaults.buttonColors(containerColor = NAaccentColor),
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Text("Gå til kurv", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text("Færdig", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
             }
         }
     }
