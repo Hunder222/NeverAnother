@@ -58,7 +58,11 @@ fun Navigatior(
             Frontpage()
         }
         composable("productpage"){
-            Productpage()
+            Productpage(
+                naViewModel = naViewModel,
+                onGoToMeasurement = { navController.navigate("choosemeasurement") },
+                onCartClick = { navController.navigate("cart") }
+            )
         }
         composable("choosemeasurement"){
             Choosemeasurement(naViewModel,

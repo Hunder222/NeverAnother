@@ -9,9 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.neveranother.R
+import com.example.neveranother.viewmodels.NAViewModel
 
 @Composable
-fun Productpage() {
+fun Productpage(
+    naViewModel: NAViewModel,
+    onGoToMeasurement: () -> Unit,
+    onCartClick: () -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -19,9 +24,15 @@ fun Productpage() {
         item {
             Navigation()
 
-            Product()
+            Product(
+                naViewModel,
+                onCartClick
+            )
 
-            Measurement()
+            Measurement(
+                onGoToMeasurement,
+                naViewModel
+            )
 
             Readmore(
                 "Mød din nye yndlings-bh - skabt ved hjælp af vores custom fit-algoritme og skræddersyet til at passe perfekt til dine mål. Denne bh er skabt til dig.\n" +
