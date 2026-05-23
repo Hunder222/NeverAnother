@@ -74,16 +74,17 @@ fun HowToScan(
                 .padding(vertical = 20.dp),
         )
 
-        NAMicroCopy(microCopy1)
 
         // Laver plads der fylder resterene whitespace, så button skubbes ned i bunden af skærmen
         Spacer(modifier = Modifier.weight(1f))
+
+        NAMicroCopy(microCopy1)
 
         Button(
             onClick = onStartScanClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 10.dp),
+                .padding(vertical = 20.dp),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = NAaccentColor
