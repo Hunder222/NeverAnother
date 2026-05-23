@@ -17,7 +17,6 @@ import com.example.neveranother.frontpage.Frontpage
 import com.example.neveranother.manual.Manual
 import com.example.neveranother.productpage.Productpage
 import com.example.neveranother.scanner.Scanner
-import com.example.neveranother.scanner.components.HowToScan
 import com.example.neveranother.viewmodels.NAviewmodel
 
 @Composable
@@ -34,7 +33,7 @@ fun Navigatior(
                 goToProductpage = {navController.navigate("productpage")},
                 goToChoosemeasurement = {navController.navigate("choosemeasurement")},
                 goToManual = {navController.navigate("manual")},
-                goToScanner = {navController.navigate("howtoscan")},
+                goToScanner = {navController.navigate("scanner")},
                 goToCart = {navController.navigate("cart")}
             )
         }
@@ -56,9 +55,7 @@ fun Navigatior(
             )
         }
         composable("scanner"){
-            Scanner(
-                NAviewmodel
-            )
+            Scanner()
         }
         composable("cart"){
             Cart()

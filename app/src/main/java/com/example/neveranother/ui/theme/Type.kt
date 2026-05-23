@@ -5,7 +5,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.sp
 import com.example.neveranother.R
@@ -23,8 +22,6 @@ val NohemiFontFamily = FontFamily(
     Font(R.font.nohemi_black, FontWeight.Black)
 )
 
-
-
 // Google fonts setup
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -37,9 +34,9 @@ val interFontName = GoogleFont("Inter")
 
 // FontFamily for "Inter"
 val Inter = FontFamily(
-    Font(googleFont = interFontName, fontProvider = provider, weight = FontWeight.Normal),
-    Font(googleFont = interFontName, fontProvider = provider, weight = FontWeight.Medium),
-    Font(googleFont = interFontName, fontProvider = provider, weight = FontWeight.Bold)
+    androidx.compose.ui.text.googlefonts.Font(googleFont = interFontName, fontProvider = provider, weight = FontWeight.Normal),
+    androidx.compose.ui.text.googlefonts.Font(googleFont = interFontName, fontProvider = provider, weight = FontWeight.Medium),
+    androidx.compose.ui.text.googlefonts.Font(googleFont = interFontName, fontProvider = provider, weight = FontWeight.Bold)
 )
 
 
