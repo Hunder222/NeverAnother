@@ -86,7 +86,7 @@ fun Choosemeasurement(
         )
 
         MeassurementCard( // 3D-card
-            R.drawable.threed,
+            R.drawable.scanimage,
             "Image of woman scanning herself with her phone",
             btn3DText,
             goToScanner,
@@ -149,7 +149,7 @@ fun MeassurementCard( // use same for both so that changes can be made for both 
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp)
+                    .height(200.dp)
                     .clip(RoundedCornerShape(15.dp))
             )
 
