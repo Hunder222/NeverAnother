@@ -34,12 +34,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.neveranother.ui.theme.NAtextBlack
 import com.example.neveranother.ui.theme.NohemiFontFamily
 import com.example.neveranother.viewmodels.NAViewModel
 
@@ -70,7 +72,8 @@ val secondTextReminderBtnEnglish: String ="Remind me later"
 fun Choosemeasurement(
         naViewModel: NAViewModel, // references navigator so the buttons lead to the correct pages
         goToManual: () -> Unit,
-        goToScanner: () -> Unit
+        goToScanner: () -> Unit,
+        onBack: () -> Unit
 ){
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -122,6 +125,20 @@ fun Choosemeasurement(
         )
 
         ReminderButtonAndBar ({},firstTextReminderBtnDanish,secondTextReminderBtnDanish)
+
+        Button(
+            onClick = onBack,
+            modifier = Modifier
+                .weight(1f)
+                .height(30.dp)
+                .width(200.dp)
+                .padding(10.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF2F2F2)),
+            shape = RoundedCornerShape(15.dp)
+        ) {
+            Text("Tilbage", color = NAtextBlack, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        }
+
     }
 }
 @Composable

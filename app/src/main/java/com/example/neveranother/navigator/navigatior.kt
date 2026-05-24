@@ -71,7 +71,8 @@ fun Navigatior(
         composable("choosemeasurement"){
             Choosemeasurement(naViewModel,
                 {navController.navigate("manual")},
-                {navController.navigate("howtoscan")})
+                {navController.navigate("howtoscan")},
+                 { navController.popBackStack() })
         }
         composable("manual"){
             Manual(
