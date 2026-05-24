@@ -60,6 +60,18 @@ import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAbackgroundColor
 import com.example.neveranother.ui.theme.NAtextBlack
 import com.example.neveranother.viewmodels.NAViewModel
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.runtime.LaunchedEffect
 
 // Reusable dropdown function
 @Composable
