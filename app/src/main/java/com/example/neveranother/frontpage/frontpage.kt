@@ -220,13 +220,14 @@ fun Frontpage(
 
                 Column(
                     modifier = Modifier
-                        .padding(15.dp, top = 40.dp)
+                        .padding(15.dp, top = 15.dp)
                         .background(
                             color = warmGrey,
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(20.dp)
                         .width(300.dp)
+                        .height(180.dp)
                 ) {
 
                     Text(
@@ -247,13 +248,14 @@ fun Frontpage(
 
                 Column(
                     modifier = Modifier
-                        .padding(15.dp, top = 40.dp)
+                        .padding(15.dp, top = 15.dp)
                         .background(
                             color = warmGrey,
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(20.dp)
                         .width(300.dp)
+                        .height(180.dp)
                 ) {
 
                     Text(
@@ -271,13 +273,14 @@ fun Frontpage(
 
                 Column(
                     modifier = Modifier
-                        .padding(15.dp, top = 40.dp)
+                        .padding(15.dp, top = 15.dp, end = 57.dp)
                         .background(
                             color = warmGrey,
                             shape = RoundedCornerShape(16.dp)
                         )
-                        .padding(20.dp, end = 60.dp)
+                        .padding(20.dp,)
                         .width(300.dp)
+                        .height(180.dp)
                 ) {
 
                     Text(
