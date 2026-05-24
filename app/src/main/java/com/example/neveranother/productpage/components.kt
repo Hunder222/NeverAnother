@@ -1,6 +1,7 @@
 package com.example.neveranother.productpage
 
 import android.os.Build.VERSION.SDK_INT
+import android.view.Menu
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -55,20 +56,10 @@ import coil.request.ImageRequest
 import com.example.neveranother.R
 import com.example.neveranother.components.NABodyText
 import com.example.neveranother.components.NAHeader1
+import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAbackgroundColor
 import com.example.neveranother.ui.theme.NAtextBlack
-import androidx.compose.foundation.gestures.rememberTransformableState
-import androidx.compose.foundation.gestures.transformable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.IconButton
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.draw.clip
+import com.example.neveranother.viewmodels.NAViewModel
 
 // Reusable dropdown function
 @Composable
@@ -131,14 +122,25 @@ fun Navigation() {
 
 // Product part
 @Composable
-fun Product() {
+fun Product(
+    naViewModel: NAViewModel, // Access to the saved data
+    _onCartClick: () -> Unit // Action when button is clicked
+) {
 // Tracks if the white or black icon is active
     var isColorSelected by remember { mutableStateOf(true) }
 
 // Tracks how many items the user wants to buy
     var quantity by remember { mutableStateOf(1) }
 
-    Column(
+    var cartBtnColor by remember { mutableStateOf(Color(0xFFD9D9D9)) }
+    var onCartClick by remember { mutableStateOf({  }) } // Empty action on default
+    // Checks if measurements are saved and makes card button orange and makes it clickable
+    if (naViewModel.savedMeasurements.size > 0) {
+        cartBtnColor = NAaccentColor
+        onCartClick = _onCartClick
+    }
+
+Column(
         modifier = Modifier.fillMaxWidth(0.90f)
     ) {
         // Checks the state if true it picks white image, otherwise it picks black image
@@ -220,15 +222,16 @@ fun Product() {
             }
 
         }
-        Column() {
+
+    Column() {
             Button(
-                onClick = {},
+                onClick = onCartClick,
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFD9D9D9)
+                    containerColor = cartBtnColor
                 )
             ) {
                 NABodyText("Tilføj til kurv", color = Color(0xFFFFFFFF))
@@ -266,12 +269,15 @@ fun BorderLine() {
 
 // Measurement part
 @Composable
-fun Measurement() {
+fun Measurement(
+    onGoToMeasurement: () -> Unit, // Action when button is clicked
+    naViewModel: NAViewModel // Access to the saved data
+) {
     Column(
         modifier = Modifier.fillMaxWidth(0.90f)
     ) {
         Button(
-            onClick = {},
+            onClick = onGoToMeasurement,
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -282,15 +288,18 @@ fun Measurement() {
         ) {
             NABodyText("Tag mine mål", color = NAbackgroundColor)
         }
-        Dropdown("Jeg har allerede mine mål") { dropdownContent1() }
+        Dropdown("Jeg har allerede mine mål") { dropdownContent1(naViewModel) }
     }
     BorderLine()
 }
 
 // DropwdownContent 1 for measurement dropdown. Handles measurement data from user
 @Composable
-fun dropdownContent1() {
+fun dropdownContent1(
+    naViewModel: NAViewModel // Access to saved data
+) {
     // Keeps the data even if user rotates phone
+    var chestVolume by rememberSaveable { mutableStateOf("Volume") }
     var upperCircum by rememberSaveable { mutableStateOf("") }
     var lowerCircum by rememberSaveable { mutableStateOf("") }
     var chestWidth by rememberSaveable { mutableStateOf("") }
@@ -319,7 +328,7 @@ fun dropdownContent1() {
         ) {
 
             OutlinedTextField(
-                upperCircum,
+                value= upperCircum,
                 onValueChange = { upperCircum = it },
                 label = { Text("Øvre omkreds", fontSize = 15.sp) },
                 modifier = Modifier.weight(1f),
@@ -327,6 +336,7 @@ fun dropdownContent1() {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
 
             )
+
 
             OutlinedTextField(
                 lowerCircum,
@@ -364,7 +374,26 @@ fun dropdownContent1() {
             )
         }
         // Calls the DropdownSelector to show breast volume
-        DropdownSelector()
+        DropdownSelector(
+            selectedOption = chestVolume, // Shows what has been selected
+            onOptionSelected = {chestVolume = it} // Calls the function to update the state variable
+        )
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth(),
+            onClick = {
+                // Button grabs data and saves it
+                naViewModel.upperCircumference = upperCircum
+                naViewModel.lowerCircumference = lowerCircum
+                naViewModel.chestHeight = chestHeight
+                naViewModel.chestWidth = chestWidth
+                naViewModel.chestVolume = chestVolume
+
+                naViewModel.saveCurrentMeasurements()
+            }, colors = ButtonDefaults.buttonColors(Color(0xFFFF5F00))
+
+        ) { NABodyText("Bekræft", color = NAbackgroundColor) }
     }
 }
 
@@ -378,7 +407,10 @@ data class MenuOptions(
 // DropdownSelector for breast volume in measurement
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropdownSelector() {
+fun DropdownSelector(
+    selectedOption: String, // Parameter takes string
+    onOptionSelected: (String) -> Unit // Action when button is clicked
+) {
     // A list of all four options using the data class
     val options = listOf(
         MenuOptions("Fastere top", R.drawable.firmer_top_volumen),
@@ -390,8 +422,6 @@ fun DropdownSelector() {
     // Keeps the dropdown closed
     var expanded by remember { mutableStateOf(false) }
     // Starts off with Volume and changes when you press on an option.
-    // Resets if you close the Dropdown composable
-    var selectedOption by remember { mutableStateOf("Volume") }
 
     Column() {
         // Handles the logic of a dropdown field
@@ -420,7 +450,7 @@ fun DropdownSelector() {
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-            // loops through the list and creates dropDownMenuItem for each one
+                // loops through the list and creates dropDownMenuItem for each one
                 options.forEach { option ->
                     DropdownMenuItem(
                         text = {
@@ -447,8 +477,8 @@ fun DropdownSelector() {
                         },
 
                         onClick = {
-                            // Updates selectedOption with selected text when clicked
-                            selectedOption = option.text
+                            // When user taps an item it sends message to parent
+                            onOptionSelected(option.text)
                             // Closes the menu when clicked
                             expanded = false
                         }

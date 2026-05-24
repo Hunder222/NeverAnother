@@ -35,7 +35,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.neveranother.ui.theme.NohemiFontFamily
-import com.example.neveranother.viewmodels.NAviewmodel
+import com.example.neveranother.viewmodels.NAViewModel
 
 // code written by Rosalina
 
@@ -62,7 +62,7 @@ val secondTextReminderBtnEnglish: String ="Remind me later"
 
     @Composable
 fun Choosemeasurement(
-        NAviewmodel: NAviewmodel, // references navigator so the buttons lead to the correct pages
+        naViewModel: NAViewModel, // references navigator so the buttons lead to the correct pages
         goToManual: () -> Unit,
         goToScanner: () -> Unit
 ){
