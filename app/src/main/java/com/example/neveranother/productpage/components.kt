@@ -148,15 +148,8 @@ Column(
             if (isColorSelected) R.drawable.na_prod_white else R.drawable.na_prod_black
 
         // Images updates based on state
-        Image(
-            painter = painterResource(id = productImage),
-            contentDescription = "Product images",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp)
-                .align(Alignment.CenterHorizontally),
-            contentScale = ContentScale.Crop
-        )
+        ProductImageViewer(isColorSelected)
+
         Row(
             modifier = Modifier
                 .padding(vertical = 15.dp)
@@ -697,5 +690,113 @@ fun FAQ() {
         }
 
         BorderLine()
+    }
+}
+
+
+// the following code is by Rosalina
+@Composable
+fun ProductImageViewer(isColorSelected: Boolean) {
+    val images = if (isColorSelected) {
+        listOf(R.drawable.na_prod_white, R.drawable.na_prod_white_2, R.drawable.na_prod_white_3) // images in lists to help with code later (forEach)
+    } else {
+        listOf(R.drawable.na_prod_black, R.drawable.na_prod_black_2, R.drawable.na_prod_black_3)
+    }
+
+    var currentIndex by remember { mutableStateOf(0) } // starts on first image
+
+
+    var scale by remember { mutableStateOf(1f) } // remembers how zoomed in the fingers are
+    var offset by remember { mutableStateOf(Offset.Zero) }
+
+    val transformableState = rememberTransformableState { zoomChange, offsetChange, _ ->
+        scale = (scale * zoomChange).coerceIn(1f, 4f) // makes it so that the image can't be made smaller than it is and not biiger than 4 times its size
+        if (scale > 1f) offset += offsetChange
+    }
+
+    LaunchedEffect(transformableState.isTransformInProgress) { // runs the code every time isTransformInProgress changes
+        if (!transformableState.isTransformInProgress) { // snaps back if the fingers let go so that the image doen't stay away from its place
+            scale = 1f
+            offset = Offset.Zero
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
+    ) {
+        Image(
+            painter = painterResource(id = images[currentIndex]),
+            contentDescription = "Productpicture",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .graphicsLayer( // changes picture only, not layout
+                    scaleX = scale, // is in charge of zoom/size
+                    scaleY = scale,
+                    translationX = offset.x, // is in change of position on page
+                    translationY = offset.y
+                )
+                .transformable(state = transformableState) // links fingermovemnet with picture
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+
+        // left arrow
+        if (currentIndex > 0) { // remembers what picture is shown
+            IconButton(
+                onClick = {
+                    currentIndex--
+                    scale = 1f
+                    offset = Offset.Zero
+                },
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Icon( // arrow
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Last picture",
+                    tint = Color.White
+                )
+            }
+        }
+
+        // right arrow
+        if (currentIndex < images.size - 1) {
+            IconButton(
+                onClick = {
+                    currentIndex++
+                    scale = 1f
+                    offset = Offset.Zero
+                },
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowForward,
+                    contentDescription = "Next picture",
+                    tint = Color.White
+                )
+            }
+        }
+
+        // Dots on bottom of picture
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            images.indices.forEach { index -> // makes a dot for every image
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (index == currentIndex) Color.White
+                            else Color.White.copy(alpha = 0.5f) // slightly transparent when not the picture shown
+                        )
+                )
+            }
+        }
     }
 }
