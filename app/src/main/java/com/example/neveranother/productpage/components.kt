@@ -72,6 +72,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.runtime.LaunchedEffect
+import com.example.neveranother.ui.theme.NAaccentDowntoned
+import com.example.neveranother.ui.theme.NAboxColor
+import com.example.neveranother.ui.theme.NAwarmGrey
 
 // Reusable dropdown function
 @Composable
@@ -157,7 +160,7 @@ Column(
     ) {
         // Checks the state if true it picks white image, otherwise it picks black image
         val productImage =
-            if (isColorSelected) R.drawable.na_prod_white else R.drawable.na_prod_black
+            if (isColorSelected) R.drawable.na_prod_white else R.drawable.na_prod_black_cropped
 
         // Images updates based on state
         ProductImageViewer(isColorSelected)
@@ -317,11 +320,19 @@ fun dropdownContent1(
     var chestWidth by rememberSaveable { mutableStateOf("") }
     var chestHeight by rememberSaveable { mutableStateOf("") }
 
+    if (naViewModel.savedMeasurements.size > 0) {
+        chestVolume = naViewModel.chestVolume
+        upperCircum = naViewModel.upperCircumference
+        lowerCircum = naViewModel.lowerCircumference
+        chestWidth = naViewModel.chestWidth
+        chestHeight = naViewModel.chestHeight
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -330,7 +341,7 @@ fun dropdownContent1(
             GIFLoader(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp),
+                    .height(200.dp),
                 R.drawable.bra_size
             )
         }
@@ -342,7 +353,7 @@ fun dropdownContent1(
             OutlinedTextField(
                 value= upperCircum,
                 onValueChange = { upperCircum = it },
-                label = { Text("Øvre omkreds", fontSize = 15.sp) },
+                label = { Text("Øvre omkreds", fontSize = 15.sp, color = NAtextBlack) },
                 modifier = Modifier.weight(1f),
                 // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -353,7 +364,7 @@ fun dropdownContent1(
             OutlinedTextField(
                 lowerCircum,
                 onValueChange = { lowerCircum = it },
-                label = { Text("Nedre omkreds", fontSize = 15.sp) },
+                label = { Text("Nedre omkreds", fontSize = 15.sp, color = NAtextBlack) },
                 modifier = Modifier.weight(1f),
                 // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -368,7 +379,7 @@ fun dropdownContent1(
             OutlinedTextField(
                 chestWidth,
                 onValueChange = { chestWidth = it },
-                label = { Text("Brystbredde", fontSize = 15.sp) },
+                label = { Text("Brystbredde", fontSize = 15.sp, color = NAtextBlack) },
                 modifier = Modifier.weight(1f),
                 // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -378,7 +389,7 @@ fun dropdownContent1(
             OutlinedTextField(
                 chestHeight,
                 onValueChange = { chestHeight = it },
-                label = { Text("Brysthøjde", fontSize = 15.sp) },
+                label = { Text("Brysthøjde", fontSize = 15.sp, color = NAtextBlack) },
                 modifier = Modifier.weight(1f),
                 // Makes sure user can only type numbers
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -455,8 +466,7 @@ fun DropdownSelector(
                 // Arrow that rotates depending on state
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                },
-                colors = ExposedDropdownMenuDefaults.textFieldColors()
+                }
             )
             ExposedDropdownMenu(
                 expanded = expanded,
@@ -477,13 +487,15 @@ fun DropdownSelector(
                                     painter = painterResource(id = option.image),
                                     contentDescription = "${option.text} image",
                                     modifier = Modifier
-                                        .size(90.dp)
-                                        .background(Color.LightGray)
+                                        .size(100.dp)
+                                        .background(NAbackgroundColor)
+                                        .padding(5.dp)
                                 )
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Text(
                                     text = option.text,
-                                    style = MaterialTheme.typography.bodyLarge
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = NAtextBlack
                                 )
                             }
                         },
@@ -712,7 +724,7 @@ fun ProductImageViewer(isColorSelected: Boolean) {
     val images = if (isColorSelected) {
         listOf(R.drawable.na_prod_white, R.drawable.na_prod_white_2, R.drawable.na_prod_white_3) // images in lists to help with code later (forEach)
     } else {
-        listOf(R.drawable.na_prod_black, R.drawable.na_prod_black_2, R.drawable.na_prod_black_3)
+        listOf(R.drawable.na_prod_black_cropped, R.drawable.na_prod_black_2, R.drawable.na_prod_black_3)
     }
 
     var currentIndex by remember { mutableStateOf(0) } // starts on first image

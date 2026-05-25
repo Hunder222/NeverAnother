@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -76,8 +77,11 @@ fun Choosemeasurement(
         onBack: () -> Unit
 ){
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+
     ) {
 
         Text(
@@ -93,11 +97,12 @@ fun Choosemeasurement(
             "Image of woman scanning herself with her phone",
             btn3DText,
             goToScanner,
-            infoText3DDanish
+            infoText3DDanish,
+            modifier = Modifier.weight(1f)
         )
 
         Row( // the icon and text needs to be next to each other so a row is used
-            modifier = Modifier.padding(horizontal = 32.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -121,24 +126,11 @@ fun Choosemeasurement(
             "Image of woman meassuring herself with a soft tape meassure",
             btnManualDanish,
             goToManual,
-            infoTextManualDanish
+            infoTextManualDanish,
+            modifier = Modifier.weight(1f)
         )
 
-        ReminderButtonAndBar ({},firstTextReminderBtnDanish,secondTextReminderBtnDanish)
-
-        Button(
-            onClick = onBack,
-            modifier = Modifier
-                .weight(1f)
-                .height(30.dp)
-                .width(200.dp)
-                .padding(10.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF2F2F2)),
-            shape = RoundedCornerShape(15.dp)
-        ) {
-            Text("Tilbage", color = NAtextBlack, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-        }
-
+        ReminderButtonAndBar(onBack, firstTextReminderBtnDanish,secondTextReminderBtnDanish)
     }
 }
 @Composable
@@ -147,7 +139,9 @@ fun MeassurementCard( // use same for both so that changes can be made for both 
     imageDescription: String,
     buttonText: String,
     onClick: () -> Unit,
-    infoTextInLanguage: String) {
+    infoTextInLanguage: String,
+    modifier: Modifier
+) {
 
     var showInfo by remember { // remembers whether info should be shown
         mutableStateOf(false) // does so that info is automatically not shown
@@ -155,8 +149,8 @@ fun MeassurementCard( // use same for both so that changes can be made for both 
 
     Card( // groups category and makes shape correct with rounded corners
         shape = RoundedCornerShape(15.dp),
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+        modifier = modifier
+            .padding(vertical = 8.dp)
             .fillMaxWidth()
     ) {
         Box { // box used so things can be placed on top of each other
@@ -165,8 +159,7 @@ fun MeassurementCard( // use same for both so that changes can be made for both 
                 contentDescription = imageDescription,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
+                    .fillMaxSize()
                     .clip(RoundedCornerShape(15.dp))
             )
 
@@ -189,10 +182,7 @@ fun MeassurementCard( // use same for both so that changes can be made for both 
                     InfoCard(infoText = infoTextInLanguage)
                 }
             }
-
         }
-
-
     }
 }
 
@@ -260,7 +250,7 @@ fun InfoCard(
 @OptIn(ExperimentalMaterial3Api::class) // this is an experimental way of making this that google has not locked in yet, so it could change
 @Composable
 fun ReminderButtonAndBar(
-    onClick: () -> Unit,
+    onBack: () -> Unit,
     firstTextReminderBtn: String,
     secondTextReminderBtn: String
 ) {
@@ -268,34 +258,57 @@ fun ReminderButtonAndBar(
     var showSheet by remember { mutableStateOf(false) } // rembers whether bottomsheet should be shown
     val sheetState = rememberModalBottomSheetState()
 
-    Button(
-        onClick = { showSheet = true }, // click to open bottomsheet that has reminders
-        shape = RoundedCornerShape(15.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB58A)),
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .height(75.dp)
+            .padding()
     ) {
+        Button(
+            onClick = onBack,
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(0.33f)
+                .padding(end = 8.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF2F2F2)),
+            shape = RoundedCornerShape(15.dp)
+        ) {
+            Text("Tilbage", color = NAtextBlack, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(8.dp)
+
+        Button(
+            onClick = { showSheet = true }, // click to open bottomsheet that has reminders
+            shape = RoundedCornerShape(15.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB58A)),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .padding(horizontal = 0.dp)
         ) {
 
-            Text(
-                text = firstTextReminderBtn,
-                fontSize = 12.sp,
-                color = Color.White
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(8.dp)
+            ) {
 
-            Text(
-                text = secondTextReminderBtn,
-                fontSize = 22.sp,
-                color = Color.White
-            )
+                Text(
+                    text = firstTextReminderBtn,
+                    fontSize = 12.sp,
+                    color = Color.White
+                )
 
+                Text(
+                    text = secondTextReminderBtn,
+                    fontSize = 22.sp,
+                    color = Color.White
+                )
+
+            }
         }
     }
+
+
     if (showSheet) {
         ModalBottomSheet(
             onDismissRequest = { showSheet = false }, // lambdafunction that is called when the user clicks outside the sheet or slides it away

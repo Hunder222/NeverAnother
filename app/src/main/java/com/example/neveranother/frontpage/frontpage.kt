@@ -2,6 +2,7 @@ package com.example.neveranother.frontpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import com.example.neveranother.productpage.ProductInfo
+import com.example.neveranother.ui.theme.NAbackgroundColor
 
 val nohemiBlack = FontFamily(
     Font(R.font.nohemi_black)
@@ -45,12 +47,15 @@ val nohemiBlack = FontFamily(
 val warmGrey = Color(0xFFF9F6EE)
 
 @Composable
-fun Navbar() {
+fun Navbar(
+    goToHome: () -> Unit,
+    goToCart: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background(Color.White.copy(alpha = 0.8f))
+            .background(NAbackgroundColor)
             .padding(horizontal = 16.dp)
     ) {
 
@@ -68,9 +73,11 @@ fun Navbar() {
         Icon(
             painter = painterResource(id = R.drawable.logo_black),
             contentDescription = "Nav bar logo",
+            tint = Color.Black,
             modifier = Modifier
                 .align(Alignment.Center)
                 .height(32.dp)
+                .clickable(onClick = goToHome),
         )
 
         // Right icon
@@ -81,6 +88,7 @@ fun Navbar() {
             modifier = Modifier
                 .align(Alignment.CenterEnd)
                 .size(28.dp)
+                .clickable(onClick = goToCart)
         )
     }
 }
@@ -93,7 +101,10 @@ fun Frontpage(
     // Scaffold to make sure the Navbar is on top of other content.
     Scaffold(
         topBar = {
-            Navbar()
+            Navbar(
+                goToHome = {},
+                goToCart = {}
+            )
         }
     ) { padding ->
         Column(

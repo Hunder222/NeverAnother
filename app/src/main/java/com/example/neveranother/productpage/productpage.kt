@@ -1,5 +1,6 @@
 package com.example.neveranother.productpage
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,26 +10,34 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.unit.dp
 import com.example.neveranother.R
 import com.example.neveranother.frontpage.Navbar
+import com.example.neveranother.ui.theme.NAbackgroundColor
 import com.example.neveranother.viewmodels.NAViewModel
 
 @Composable
 fun Productpage(
     naViewModel: NAViewModel,
     onGoToMeasurement: () -> Unit,
-    onCartClick: () -> Unit
+    onCartClick: () -> Unit,
+    goToHome: () -> Unit,
+    goToCart: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            Navbar()
+            Navbar(
+                goToHome,
+                goToCart
+            )
         }
     ) { padding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(padding),
+                .padding(padding)
+                .background(NAbackgroundColor),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
