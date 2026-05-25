@@ -138,7 +138,9 @@ fun Navigatior(
             )
         }
         composable("cart"){
-            Cart()
+            Cart(
+                onBack = { navController.popBackStack() }
+            )
         }
         composable("history"){
             History(
