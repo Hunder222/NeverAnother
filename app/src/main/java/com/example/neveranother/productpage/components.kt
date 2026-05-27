@@ -104,7 +104,7 @@ fun Dropdown(
             if (isExpanded) {
                 Icon(
                     painter = painterResource(R.drawable.expanded),
-                    contentDescription = "Arrow that expands dropdown",
+                    contentDescription = "Arrow that collapses dropdown",
                     modifier = Modifier.size(24.dp),
                     tint = Color.Unspecified
                 )
