@@ -30,6 +30,9 @@ Using several usertests we have found points of improvements of their website an
 - Revamped frontpage
   - Clear call-to-action buttons
   - Direct button to product page
+- Measurement history (WIP)
+  - Save recent measurement to a cloud database (Supabase)
+  - View a history of previously saved measurements
 
 # Kaos-kontrollørene:
 - Elliot Theodor Lyhne Christensen
