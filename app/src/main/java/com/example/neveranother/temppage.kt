@@ -22,6 +22,7 @@ import com.example.neveranother.ui.theme.Inter
 import com.example.neveranother.ui.theme.NAaccentColor
 import com.example.neveranother.ui.theme.NAbackgroundColor
 
+// Elliot
 // This is a temporary view, used for development navigation, as proper navigation is not implemented yet
 @Composable
 fun Temppage(
@@ -32,6 +33,7 @@ fun Temppage(
     goToScanner: () -> Unit,
     goToCart: () -> Unit,
     goToHistory: () -> Unit,
+    goToSupabase: () -> Unit,
 ) {
     // container for buttons, centered on the screen
     Column(
@@ -98,7 +100,13 @@ fun Temppage(
         Button(
             onClick = goToHistory
         ){
-            Text("Målehistorik")
+            Text("Lokal Målehistorik")
+        }
+
+        Button(
+            onClick = goToSupabase
+        ){
+            Text("Supabase Målehistorik")
         }
     }
 }

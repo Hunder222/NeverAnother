@@ -21,6 +21,7 @@ import com.example.neveranother.productpage.Productpage
 import com.example.neveranother.scanner.Scanner
 import com.example.neveranother.scanner.components.ChestVolume3D
 import com.example.neveranother.scanner.components.HowToScan
+import com.example.neveranother.supabase.Supabase
 import com.example.neveranother.viewmodels.NAViewModel
 
 // Init af Elliot, Redigeret af alle
@@ -46,7 +47,8 @@ fun Navigatior(
                 goToManual = { navController.navigate("manual") },
                 goToScanner = { navController.navigate("scanner") },
                 goToCart = { navController.navigate("cart") },
-                goToHistory = { navController.navigate("history") }
+                goToHistory = { navController.navigate("history") },
+                goToSupabase = { navController.navigate("supabase") }
             )
         }
         composable("frontpage") {
@@ -143,6 +145,11 @@ fun Navigatior(
             History(
                 viewModel = naViewModel,
                 onBack = { navController.popBackStack() }
+            )
+        }
+        composable("supabase"){
+            Supabase(
+                NAViewModel = naViewModel
             )
         }
     }

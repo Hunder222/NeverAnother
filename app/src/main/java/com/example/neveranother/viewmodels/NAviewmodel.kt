@@ -5,17 +5,21 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+// Init af Elliot, Measurement class, var´s og function af victor, data class serialized af Elliot.
+
+@Serializable
 data class Measurement(
     val upperCircumference: String,
     val lowerCircumference: String,
     val chestVolume: String,
     val chestWidth: String,
     val chestHeight: String,
-    val date: String = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+    val date: String
 )
 
 class NAViewModel: ViewModel() {
@@ -37,7 +41,8 @@ class NAViewModel: ViewModel() {
             lowerCircumference = lowerCircumference,
             chestVolume = chestVolume,
             chestWidth = chestWidth,
-            chestHeight = chestHeight
+            chestHeight = chestHeight,
+            date = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
         )
         savedMeasurements.add(measurement)
     }

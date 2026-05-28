@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,8 +22,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -137,6 +140,7 @@ fun MeasurementInputSection(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.End
             ) {
+                val keyboardController = LocalSoftwareKeyboardController.current // Tilføjet for at fix linjeskift problem
                 BasicTextField(
                     value = value,
                     onValueChange = { if (it.length <= 3) onValueChange(it) },
@@ -147,7 +151,17 @@ fun MeasurementInputSection(
                         color = NAtextBlack,
                         textAlign = TextAlign.End
                     ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done // Tilføjet for at fix linjeskift problem
+                    ),
+                    // Tilføjet for at fix linjeskift problem
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                        }
+                    ),
                     decorationBox = { innerTextField ->
                         if (value.isEmpty()) {
                             Text("00", color = NAtextBlack.copy(alpha = 0.5f), fontSize = 22.sp, fontWeight = FontWeight.Bold)
