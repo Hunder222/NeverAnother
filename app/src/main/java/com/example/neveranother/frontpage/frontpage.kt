@@ -95,7 +95,8 @@ fun Navbar(
 
 @Composable
 fun Frontpage(
-    onGoToProductpage: () -> Unit
+    onGoToProductpage: () -> Unit,
+    goToCart: () -> Unit
 ) {
 
     // Scaffold to make sure the Navbar is on top of other content.
@@ -103,13 +104,13 @@ fun Frontpage(
         topBar = {
             Navbar(
                 goToHome = {},
-                goToCart = {}
+                goToCart = goToCart
             )
         }
     ) { padding ->
         Column(
             modifier = Modifier
-                .padding(top = 0.dp) // IMPORTANT: remove top padding
+                .padding(top = 50.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             Box {
@@ -122,10 +123,9 @@ fun Frontpage(
                     text = "En BH tilpasset dine mål",
                     fontFamily = nohemiBlack,
                     fontSize = 26.sp,
-                    modifier =
-                        Modifier.padding(top = 245.dp, start = 15.dp),
-
-
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 15.dp, bottom = 10.dp),
                     )
             }
             Box {
@@ -140,7 +140,8 @@ fun Frontpage(
                         containerColor = NAaccentColor
                     ),
                     modifier = Modifier
-                        .padding(top = 270.dp, start = 15.dp)
+                        .align(Alignment.BottomStart)
+                        .padding(start = 15.dp, bottom = 90.dp)
                         .width(150.dp)
                         .shadow(
                             elevation = 3.dp,
@@ -159,8 +160,9 @@ fun Frontpage(
                     text = "Dansk design \nskræddersyet i Holland",
                     fontFamily = nohemiBlack,
                     fontSize = 26.sp,
-                    modifier =
-                        Modifier.padding(top = 330.dp, start = 15.dp)
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 15.dp, bottom = 37.dp),
                 )
 
             }
@@ -178,19 +180,11 @@ fun Frontpage(
                     text = "Sig farvel til standardstørrelser",
                     fontFamily = nohemiBlack,
                     fontSize = 26.sp,
-                    modifier =
-                        Modifier.padding(top = 310.dp, start = 15.dp)
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 15.dp, bottom = 50.dp),
                 )
             }
-
-            /*
-        Text(
-            text = "Sig farvel til standardstørrelser",
-            fontFamily = nohemiBlack,
-            fontSize = 26.sp,
-            modifier = Modifier.padding(top = 40.dp, start = 15.dp)
-        )
-         */
 
             Text(
                 text = "Traditionelle BH-størrelser har aldrig passet til alle kroppe.\n" +
@@ -228,7 +222,6 @@ fun Frontpage(
                 modifier = Modifier
                     .horizontalScroll(rememberScrollState())
             ) {
-
                 Column(
                     modifier = Modifier
                         .padding(15.dp, top = 15.dp)
@@ -237,7 +230,7 @@ fun Frontpage(
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(20.dp)
-                        .width(300.dp)
+                        .width(255.dp)
                         .height(180.dp)
                 ) {
 
@@ -265,7 +258,7 @@ fun Frontpage(
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(20.dp)
-                        .width(300.dp)
+                        .width(255.dp)
                         .height(180.dp)
                 ) {
 
@@ -284,13 +277,13 @@ fun Frontpage(
 
                 Column(
                     modifier = Modifier
-                        .padding(15.dp, top = 15.dp, end = 57.dp)
+                        .padding(15.dp, top = 15.dp, end = 16.dp)
                         .background(
                             color = warmGrey,
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(20.dp,)
-                        .width(300.dp)
+                        .width(255.dp)
                         .height(180.dp)
                 ) {
 
@@ -322,7 +315,9 @@ fun Frontpage(
                     text = "Pasformsgaranti",
                     fontFamily = nohemiBlack,
                     fontSize = 26.sp,
-                    modifier = Modifier.padding(top = 345.dp, start = 15.dp),
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 15.dp, bottom = 10.dp),
                     color = Color.White
                 )
 
@@ -337,11 +332,11 @@ fun Frontpage(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-            ProductInfo(
-                R.drawable.check_mark,
-                "Størrelsesgaranti",
-                "Vi ønsker, at du skal elske din BH. Er pasformen ikke perfekt, så tilbyder vi en gratis størrelsesgaranti!"
-            )
+                ProductInfo(
+                    R.drawable.check_mark,
+                    "Størrelsesgaranti",
+                    "Vi ønsker, at du skal elske din BH. Er pasformen ikke perfekt, så tilbyder vi en gratis størrelsesgaranti!"
+                )
             }
 /*
             Column(
@@ -364,7 +359,7 @@ fun Frontpage(
                     containerColor = NAaccentColor
                 ),
                 modifier = Modifier
-                    .padding(top = 10.dp, start = 15.dp, end = 15.dp)
+                    .padding(horizontal = 15.dp, vertical = 15.dp)
                     .fillMaxWidth()
                     .shadow(
                         elevation = 3.dp,
@@ -381,9 +376,9 @@ fun Frontpage(
 
             Column(
                 modifier = Modifier
-                    .padding(top = 10.dp)
                     .background(color = warmGrey)
                     .fillMaxWidth()
+                    .padding(top = 10.dp, start = 16.dp, bottom = 100.dp)
             ) {
 
                 Icon(

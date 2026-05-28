@@ -23,6 +23,7 @@ import com.example.neveranother.scanner.components.ChestVolume3D
 import com.example.neveranother.scanner.components.HowToScan
 import com.example.neveranother.viewmodels.NAViewModel
 
+// Init af Elliot, Redigeret af alle
 @Composable
 fun Navigatior(
     naViewModel: NAViewModel,
@@ -32,18 +33,10 @@ fun Navigatior(
     NavHost(
         navController = navController,
         startDestination = "temppage",
-        enterTransition = {
-            slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(500)) + fadeIn(animationSpec = tween(500))
-        },
-        exitTransition = {
-            slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(500)) + fadeOut(animationSpec = tween(500))
-        },
-        popEnterTransition = {
-            slideInHorizontally(initialOffsetX = { -1000 }, animationSpec = tween(500)) + fadeIn(animationSpec = tween(500))
-        },
-        popExitTransition = {
-            slideOutHorizontally(targetOffsetX = { 1000 }, animationSpec = tween(500)) + fadeOut(animationSpec = tween(500))
-        }
+        enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(500)) + fadeIn(animationSpec = tween(500)) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(500)) + fadeOut(animationSpec = tween(500)) },
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { -1000 }, animationSpec = tween(500)) + fadeIn(animationSpec = tween(500)) },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }, animationSpec = tween(500)) + fadeOut(animationSpec = tween(500)) }
     ) {
         composable("temppage") {
             Temppage(
@@ -58,7 +51,8 @@ fun Navigatior(
         }
         composable("frontpage") {
             Frontpage(
-                { navController.navigate("productpage") }
+                { navController.navigate("productpage") },
+                { navController.navigate("cart") }
             )
         }
         composable("productpage"){
@@ -123,7 +117,8 @@ fun Navigatior(
         }
         composable("howtoscan"){
             HowToScan(
-                onNextClick ={ navController.navigate("chestvolume3d") }
+                onNextClick = { navController.navigate("chestvolume3d") },
+                onBackClick = { navController.popBackStack() }
             )
         }
         composable("chestvolume3d"){

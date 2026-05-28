@@ -93,7 +93,7 @@ fun Choosemeasurement(
         )
 
         MeassurementCard( // 3D-card
-            R.drawable.scanimage,
+            R.drawable.howtoscan2,
             "Image of woman scanning herself with her phone",
             btn3DText,
             goToScanner,
@@ -294,7 +294,7 @@ fun ReminderButtonAndBar(
 
                 Text(
                     text = firstTextReminderBtn,
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     color = Color.White
                 )
 

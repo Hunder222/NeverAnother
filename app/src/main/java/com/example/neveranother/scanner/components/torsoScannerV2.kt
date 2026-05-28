@@ -108,11 +108,11 @@ fun TorsoScannerV2(
 ) {
     // variabler til at justere egenskaber. Til at fine-tune resultater
     val TARGET_POINT_COUNT = 1500 // Antallet af punkter der skal findes før den færdiggøre scan.
-    val DEPTH_CUTOFF_METERS = 1.25f // Noder efter denne afstand fra kameraet skal ignoreres, undgår bacgrundstracking noder
+    val DEPTH_CUTOFF_METERS = 1.25f // Noder efter denne afstand fra kameraet skal ignoreres, undgår baggrunds-tracking noder
     val VOXEL_SIZE = 0.015f // Node afstand for at undgå at mange noder placers på samme punkt (0.015f = 1.5 cm afstand)
     val SPHERE_RADIUS = 0.0075f // Radius på noder i 3D vieweren (0.0075f = 0.75cm diameter)
 
-
+    // Efterfølgende er primært udviklet med hjælp af Gemini 3 Pro AI:
     
     val engine = rememberEngine()
     val cameraNode = rememberARCameraNode(engine = engine)
@@ -764,15 +764,17 @@ private fun captureARBitmap(view: ARSceneView, onBitmapCaptured: (Bitmap?) -> Un
 //
 
 // Til bryst højde og brystbredde, finder afstand mellem punkter, og udregner derefter en curve mellem 3 punkter fora t simulere målebåndet
-private fun calculateDistanceInCm(p1: Position, p2: Position): Float = sqrt((p2.x - p1.x).pow(2) + (p2.y - p1.y).pow(2) + (p2.z - p1.z).pow(2)) * 100f
-private fun calculateSurfaceDistance(s: Position, a: Position, e: Position): Float = calculateDistanceInCm(s, a) + calculateDistanceInCm(a, e)
+private fun calculateDistanceInCm(p1: Position, p2: Position):
+        Float = sqrt((p2.x - p1.x).pow(2)
+                       + (p2.y - p1.y).pow(2)
+                       + (p2.z - p1.z).pow(2)) * 100f
+
+private fun calculateSurfaceDistance(s: Position, a: Position, e: Position):
+        Float = calculateDistanceInCm(s, a) + calculateDistanceInCm(a, e)
 
 // Til øvre og under omkreds, ved at kende den halve torso kan vi bruge Ramanujan formel til at udregne resten af omkredsen
 private fun calculateEllipseCircumference(
-    pOuter1: Position,
-    pOuter2: Position,
-    pFront1: Position,
-    pFront2: Position? = null
+    pOuter1: Position, pOuter2: Position, pFront1: Position, pFront2: Position? = null
 ): Float {
     // semi-major axis a: 3D distance between pOuter1 and pOuter2 / 2
     val a = sqrt(
