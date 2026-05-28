@@ -23,13 +23,15 @@ fun Productpage(
     onGoToMeasurement: () -> Unit,
     onCartClick: () -> Unit,
     goToHome: () -> Unit,
-    goToCart: () -> Unit
+    goToCart: () -> Unit,
+    goToMenu: () -> Unit
 ) {
     Scaffold(
         topBar = {
             Navbar(
                 goToHome,
-                goToCart
+                goToCart,
+                goToMenu
             )
         }
     ) { padding ->

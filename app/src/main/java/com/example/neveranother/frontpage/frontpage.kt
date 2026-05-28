@@ -49,7 +49,8 @@ val warmGrey = Color(0xFFF9F6EE)
 @Composable
 fun Navbar(
     goToHome: () -> Unit,
-    goToCart: () -> Unit
+    goToCart: () -> Unit,
+    goToMenu: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -67,6 +68,7 @@ fun Navbar(
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .size(28.dp)
+                .clickable(onClick = goToMenu)
         )
 
         // Center logo
@@ -96,7 +98,8 @@ fun Navbar(
 @Composable
 fun Frontpage(
     onGoToProductpage: () -> Unit,
-    goToCart: () -> Unit
+    goToCart: () -> Unit,
+    goToMenu: () -> Unit
 ) {
 
     // Scaffold to make sure the Navbar is on top of other content.
@@ -104,7 +107,8 @@ fun Frontpage(
         topBar = {
             Navbar(
                 goToHome = {},
-                goToCart = goToCart
+                goToCart = goToCart,
+                goToMenu = goToMenu
             )
         }
     ) { padding ->

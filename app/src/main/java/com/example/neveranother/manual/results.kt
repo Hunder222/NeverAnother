@@ -129,10 +129,10 @@ fun ResultCard(title: String, value: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp)
+            .padding(bottom = 8.dp)
             .clip(RoundedCornerShape(24.dp))
             .background(NAwarmGrey.copy(alpha = 0.4f))
-            .padding(vertical = 24.dp),
+            .padding(vertical = 10.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -140,10 +140,10 @@ fun ResultCard(title: String, value: String) {
                 text = title,
                 fontFamily = NohemiFontFamily,
                 fontWeight = FontWeight.Bold,
-                fontSize = 34.sp,
+                fontSize = 24.sp,
                 color = NAtextBlack
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))

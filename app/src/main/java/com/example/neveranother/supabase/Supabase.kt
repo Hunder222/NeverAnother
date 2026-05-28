@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +47,8 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun Supabase(
-    NAViewModel: NAViewModel
+    NAViewModel: NAViewModel,
+    onBackClick: () -> Unit
 ){
     var localMeasurements = NAViewModel.savedMeasurements.lastOrNull()
 
@@ -58,9 +60,14 @@ fun Supabase(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(horizontal = 32.dp, vertical = 32.dp),
+            .padding(horizontal = 32.dp, vertical = 20.dp),
     ) {
-        NAHeader1("Data")
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = onBackClick) { Text("<") }
+            NAHeader1("Historik (WIP)")
+        }
 
         Spacer(Modifier.height(30.dp))
 
@@ -79,7 +86,7 @@ fun Supabase(
         }
 
 
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(10.dp))
 
         Button(
             onClick = {refreshTrigger++}

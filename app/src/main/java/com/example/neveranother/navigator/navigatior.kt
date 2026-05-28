@@ -33,7 +33,7 @@ fun Navigatior(
 
     NavHost(
         navController = navController,
-        startDestination = "temppage",
+        startDestination = "frontpage",
         enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(500)) + fadeIn(animationSpec = tween(500)) },
         exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(500)) + fadeOut(animationSpec = tween(500)) },
         popEnterTransition = { slideInHorizontally(initialOffsetX = { -1000 }, animationSpec = tween(500)) + fadeIn(animationSpec = tween(500)) },
@@ -54,7 +54,8 @@ fun Navigatior(
         composable("frontpage") {
             Frontpage(
                 { navController.navigate("productpage") },
-                { navController.navigate("cart") }
+                { navController.navigate("cart") },
+                goToMenu = { navController.navigate("supabase" )}
             )
         }
         composable("productpage"){
@@ -63,7 +64,8 @@ fun Navigatior(
                 onGoToMeasurement = { navController.navigate("choosemeasurement") },
                 onCartClick = { navController.navigate("cart") },
                 goToHome = {navController.navigate("frontpage")},
-                goToCart = {navController.navigate("cart")}
+                goToCart = {navController.navigate("cart")},
+                goToMenu = { navController.navigate("supabase" )}
             )
         }
         composable("choosemeasurement"){
@@ -149,7 +151,8 @@ fun Navigatior(
         }
         composable("supabase"){
             Supabase(
-                NAViewModel = naViewModel
+                NAViewModel = naViewModel,
+                onBackClick = { navController.popBackStack() }
             )
         }
     }
