@@ -13,17 +13,17 @@ Using several usertests we have found points of improvements of their website an
 - Choose measurement method:
     - 3D scanner
     - Manual guide
-- Revamped Manual Measuring Guide:
-  - Improved visual guides
-  - Choice between visual or video guide
-  - Clear progress bar
 - 3D scanner (AR):
   - Scan using phonecamera
-  - Using Android ARcore to map objects
+  - Using Android ARcore to 3D map torso
   - 3D viewer of scan
   - Rotate and tap points for measuring
   - All data processed locally on phone for data privacy
   - Data deletes with closing of 3D scanner
+- Revamped Manual Measuring Guide:
+  - Improved visual guides
+  - Choice between visual or video guide
+  - Clear progress bar
 - Revamped Product Page
   - Insert measurements manually 
   - "read more" button for long text
