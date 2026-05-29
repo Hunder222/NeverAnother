@@ -1,6 +1,8 @@
 # Never Another Cart Flow revamp
 *by Kaos-Kontrollørerne*
 
+<img src="app/src/main/res/drawable/bra_size.gif" width="400" alt="Bra resizing" />
+
 # About Project
 
 This project aims to bring a effective cart experience for Never Another customers.
@@ -40,6 +42,7 @@ Theres also the option to see and save measurements to the cloud
 - Measurement history (WIP)
   - Save recent measurement to a cloud database (Supabase)
   - View a history of previously saved measurements
+  - **MEASUREMENT HISTORY IS WIP AND DOES NOT STORE DATA PRIVATELY** 
 
 # Kaos-kontrollørene:
 - Elliot Theodor Lyhne Christensen
