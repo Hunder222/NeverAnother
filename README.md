@@ -12,8 +12,10 @@ Never Another is a bespoke bra manufacturer, that provides customers with bespok
 Using several usertests we have found points of improvements of their website and user flow, that we are incorporating into an Android app.
 
 # Release
-Release of PoC, 29/05/2026.
+**Release of PoC, 29/05/2026.**
+<br>
 This release features an Proff of Concept App, that includes a a purchase flow, where the user can choose to do their measurements using either the improved manual guide, or the Work in Progress (WIP) 3D scanner. 
+<br>
 Theres also the option to see and save measurements to the cloud
 <br>
 **MEASUREMENT HISTORY IS WIP AND DOES NOT STORE DATA PRIVATELY** 
